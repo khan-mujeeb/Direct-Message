@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "849018886867",
+    "project_id": "direct-message-e4a25",
+    "storage_bucket": "direct-message-e4a25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849018886867:android:a9ae9edea530a2dca1d226",
+        "android_client_info": {
+          "package_name": "com.example.dm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "849018886867-2o83bb0oji4qtl7qsnunpl5i2417kscc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqvv2TTPN4xenRRgTjm7LzB0Bm4s7mC8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "849018886867-2o83bb0oji4qtl7qsnunpl5i2417kscc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

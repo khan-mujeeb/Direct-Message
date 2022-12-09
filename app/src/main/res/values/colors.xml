@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#B1D4E0</color>
+    <color name="purple_500">#B1D4E0</color>
+    <color name="purple_700">#145DA0</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="yelloe">#cccc00</color>
+    <color name="ovlib_green">#3D550C</color>
+    <color name="midnight_blue">#145DA0</color>
+    <color name="baby_blue">#B1D4E0</color>
+    <color name="darl_blue">#0C2D48</color>
+    <color name="blue">#2E8BC0</color>
+</resources>

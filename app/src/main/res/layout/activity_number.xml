@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal"
+
+    android:layout_width="match_parent"
+    android:background="@color/darl_blue"
+    android:layout_height="match_parent"
+    tools:context=".activity.Number">
+
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:id="@+id/photu"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/mobile_login"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/photu">
+
+        <TextView
+            android:textColor="@color/white"
+            android:id="@+id/plus"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="+91" />
+
+        <EditText
+
+            android:layout_marginStart="2dp"
+            android:padding="10dp"
+            android:background="@drawable/edittext_bg"
+            android:textColor="@color/black"
+            android:gravity="start|center"
+            android:maxLength="10"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:id="@+id/one"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:inputType="number" />
+    </LinearLayout>
+
+    <Button
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/ui_btn_bg"
+        android:id="@+id/getOtp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Get OTP"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.088" />
+
+</LinearLayout>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg"
+    android:layout_height="match_parent"
+    tools:context=".activity.ChatActivity">
+
+    <LinearLayout
+        android:paddingLeft="8dp"
+        android:background="@color/darl_blue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+        <ImageView
+            android:id="@+id/back"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/person_img"
+            android:layout_marginStart="2dp"
+            android:src="@drawable/ic_baseline_person_24"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+        <TextView
+            android:id="@+id/person_name"
+            android:layout_marginStart="4dp"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:text="Name of person"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="8"
+        android:orientation="vertical"
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/message_rc"
+            android:layout_width="match_parent"
+            tools:listitem="@layout/recever_item_view"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
+        android:id="@+id/l"
+        android:padding="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:elevation="10dp"
+            android:layout_width="0dp"
+            android:backgroundTint="@color/baby_blue"
+            android:layout_weight="8"
+            app:cardCornerRadius="30dp"
+            android:layout_height="wrap_content">
+            <EditText
+
+                android:layout_gravity="start"
+                android:id="@+id/message"
+                android:inputType="textMultiLine"
+                android:background="@drawable/receiver_edittext_bg"
+                android:padding="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:hint="Message"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.card.MaterialCardView>
+        <LinearLayout
+            android:background="@drawable/sned_btn_bg"
+            android:gravity="center"
+            android:id="@+id/sendBtn"
+            android:layout_width="50dp"
+            android:layout_marginStart="8dp"
+            app:cardCornerRadius="100dp"
+            android:layout_gravity="center"
+
+            android:layout_height="50dp">
+            <ImageView
+
+                android:elevation="8dp"
+                android:layout_gravity="center"
+                android:src="@drawable/send"
+                android:layout_width="22dp"
+                android:layout_height="22dp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

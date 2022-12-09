@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:background="@color/darl_blue"
+    android:layout_height="match_parent"
+    tools:context=".activity.Number">
+
+    <ImageView
+
+        android:layout_marginTop="50dp"
+        android:id="@+id/photu"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:src="@drawable/authentication"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/photu">
+
+        <EditText
+            android:layout_margin="1dp"
+            android:background="@drawable/edittext_bg"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            tools:ignore="LabelFor"
+            android:id="@+id/one"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+        <EditText
+            android:layout_margin="1dp"
+            android:background="@drawable/edittext_bg"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:id="@+id/two"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+        <EditText
+            android:layout_margin="1dp"
+            android:background="@drawable/edittext_bg"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:id="@+id/three"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+        <EditText
+            android:gravity="center"
+            android:layout_margin="1dp"
+            android:background="@drawable/edittext_bg"
+            android:textColor="@color/black"
+            android:id="@+id/four"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+        <EditText
+
+            android:layout_margin="1dp"
+            android:background="@drawable/edittext_bg"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:id="@+id/five"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+        <EditText
+            android:layout_margin="1dp"
+            android:background="@drawable/edittext_bg"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:id="@+id/six"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="number" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/verify"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/ui_btn_bg"
+        android:text="Verify"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.088" />
+
+</LinearLayout>
