@@ -104,6 +104,8 @@ class Profile : AppCompatActivity() {
             }
     }
 
+    // photo select
+
     private fun choosePhotoFromGallery() {
         Dexter.withActivity(this).withPermissions(
             Manifest.permission.READ_EXTERNAL_STORAGE,
