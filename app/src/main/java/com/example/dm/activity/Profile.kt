@@ -30,68 +30,67 @@ import java.util.*
 
 
 class Profile : AppCompatActivity() {
+
+
     private lateinit var dialog:AlertDialog
     private lateinit var storage: FirebaseStorage
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
-
     private lateinit var binding: ActivityProfileBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // photo select button
         binding.card.setOnClickListener {
             choosePhotoFromGallery()
         }
 
+        // finish button
         binding.finishBtn.setOnClickListener {
+
             val name = binding.nameEdtxt.text.toString()
             if(name.isNotEmpty() && check==1) {
+                var builder = AlertDialog.Builder(this)
+                builder.setMessage("Loading..")
+                builder.setCancelable(false)
+                dialog = builder.create()
+                dialog.show()
                 uploadData()
             }else {
                 Toast.makeText(this,"Enter your name",Toast.LENGTH_SHORT).show()
             }
         }
 
+        // firebase variable initialisation
         storage = FirebaseUtils.firebaseStorage
         database = FirebaseUtils.firebaseDatabase
         auth = FirebaseUtils.firebaseAuth
 
     }
 
+    // function to upload data of newly created user
     private fun uploadData() {
         val reference = storage.reference.child("Profile").child(Date().time.toString())
-        reference.putFile(contentUri).addOnCompleteListener{
-            if(it.isSuccessful) {
-                reference.downloadUrl.addOnSuccessListener { task ->
-                    uploadDataInfo(task.toString())
+        reference.putFile(contentUri).addOnCompleteListener{task->
+            if(task.isSuccessful) {
+                reference.downloadUrl.addOnSuccessListener { uri ->
+                    uploadDataInfo(uri.toString())
                 }
             }
         }
-
-
     }
 
+//    function to create user
     private fun uploadDataInfo(imgUri: String) {
-        var img: String?
-        if(contentUri.toString()==null){
-            val uri = Uri.parse(com.example.dm.R.drawable.ic_baseline_person_24.toString())
-            val iStream: InputStream? = contentResolver.openInputStream(uri)
-            img = iStream.toString()
-        }else{
-            img = contentUri.toString()
-        }
+
         val user = UserInfo(auth.uid.toString(),
             binding.nameEdtxt.text.toString(),
             auth.currentUser?.phoneNumber.toString(),
-            img
+            imgUri
         )
-        var builder = AlertDialog.Builder(this)
-        builder.setMessage("Loading..")
-        builder.setCancelable(false)
-        dialog = builder.create()
-        dialog.show()
 
         database.reference.child("users")
             .child(auth.uid.toString())
@@ -105,7 +104,6 @@ class Profile : AppCompatActivity() {
     }
 
     // photo select
-
     private fun choosePhotoFromGallery() {
         Dexter.withActivity(this).withPermissions(
             Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -129,6 +127,8 @@ class Profile : AppCompatActivity() {
             }).onSameThread().check();
 
     }
+
+    // function for storage permission
     fun showDialogForPermissions() {
         androidx.appcompat.app.AlertDialog.Builder(this).setMessage("" +
                 "Allow permission to use this feature"
