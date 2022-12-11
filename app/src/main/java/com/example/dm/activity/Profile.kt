@@ -89,7 +89,7 @@ class Profile : AppCompatActivity() {
         val user = UserInfo(auth.uid.toString(),
             binding.nameEdtxt.text.toString(),
             auth.currentUser?.phoneNumber.toString(),
-            imgUri
+            imgUri, "online"
         )
 
         database.reference.child("users")

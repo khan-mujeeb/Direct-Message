@@ -21,12 +21,36 @@
             android:layout_width="30dp"
             android:layout_height="match_parent"/>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/person_img"
-            android:layout_marginStart="2dp"
-            android:src="@drawable/ic_baseline_person_24"
+        <RelativeLayout
             android:layout_width="40dp"
-            android:layout_height="40dp"/>
+            android:layout_height="40dp">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/person_img"
+                android:layout_marginStart="2dp"
+                android:src="@drawable/ic_baseline_person_24"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:visibility="gone"
+                android:id="@+id/offilne_status"
+                android:elevation="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:src="@drawable/offline_circle"
+                android:layout_height="wrap_content"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:visibility="gone"
+                android:id="@+id/online_status"
+                android:elevation="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:src="@drawable/online_circle"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/person_name"

@@ -15,13 +15,17 @@ import com.example.dm.adapter.MessageAdapter
 import com.example.dm.model.Message
 import com.example.dm.databinding.ActivityChatBinding
 import com.example.dm.utils.FirebaseUtils
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.Date
 
 class ChatActivity : AppCompatActivity() {
    private lateinit var binding: ActivityChatBinding
+   private lateinit var database: FirebaseDatabase
+   private lateinit var auth: FirebaseAuth
    private lateinit var senderUid: String
    private lateinit var reciverUid: String
     private lateinit var senderRoom: String
@@ -40,11 +44,12 @@ class ChatActivity : AppCompatActivity() {
             startActivity(Intent(this,MainActivity::class.java))
         }
 
-        senderUid = FirebaseUtils.firebaseAuth.uid.toString()
+        auth = FirebaseUtils.firebaseAuth
+        senderUid = auth.uid.toString()
         reciverUid = intent.getStringExtra("uid")!!
         img = intent.getStringExtra("img")!!
         name = intent.getStringExtra("name")!!
-        var database = FirebaseUtils.firebaseDatabase
+        database = FirebaseUtils.firebaseDatabase
         senderRoom = senderUid+reciverUid
         reciverRoom = reciverUid+senderUid
         list = ArrayList()
@@ -63,7 +68,14 @@ class ChatActivity : AppCompatActivity() {
                         val data = snapshot1.getValue(Message::class.java)
                         list.add(data!!)
                     }
-
+                    var activeStatus = intent.getStringExtra("active")
+                    if(activeStatus=="online") {
+                        binding.onlineStatus.visibility = View.VISIBLE
+                        binding.offilneStatus.visibility = View.GONE
+                    }else {
+                        binding.onlineStatus.visibility = View.GONE
+                        binding.offilneStatus.visibility = View.VISIBLE
+                    }
                     binding.messageRc.adapter = MessageAdapter(this@ChatActivity,list)
                     binding.messageRc.smoothScrollToPosition(MessageAdapter(this@ChatActivity,list).itemCount);
                 }
@@ -106,5 +118,23 @@ class ChatActivity : AppCompatActivity() {
                 Toast.makeText(this,"Enter your text",Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    override fun onResume() {
+        super.onResume()
+        activeStatus("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activeStatus("offline")
+    }
+
+    fun activeStatus(status: String) {
+
+        database.reference
+            .child("users")
+            .child(auth.uid.toString())
+            .child("activeStatus")
+            .setValue(status)
     }
 }

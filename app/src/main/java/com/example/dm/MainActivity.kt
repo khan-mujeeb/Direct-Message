@@ -51,18 +51,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        activeStatus("online")
-    }
 
-    override fun onPause() {
-        super.onPause()
-        activeStatus("offline")
-    }
-
-    fun activeStatus(status: String) {
-        database.reference.child("activeStatus").child(auth.uid.toString()).setValue(status)
-    }
 
 }

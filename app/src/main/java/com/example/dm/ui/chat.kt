@@ -61,5 +61,23 @@ class chat : Fragment() {
 
         return binding.root
     }
+    override fun onResume() {
+        super.onResume()
+        activeStatus("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activeStatus("offline")
+    }
+
+    fun activeStatus(status: String) {
+
+        database.reference
+            .child("users")
+            .child(auth.uid.toString())
+            .child("activeStatus")
+            .setValue(status)
+    }
 
 }
