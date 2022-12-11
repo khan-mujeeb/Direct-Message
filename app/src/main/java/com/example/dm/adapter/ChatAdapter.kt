@@ -11,9 +11,16 @@ import com.bumptech.glide.Glide
 import com.example.dm.R
 import com.example.dm.activity.ChatActivity
 import com.example.dm.databinding.ChatItemViewBinding
+import com.example.dm.model.Message
 import com.example.dm.model.UserInfo
+import com.example.dm.utils.FirebaseUtils
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ChatAdapter(var context: Context,var list: ArrayList<UserInfo>):RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
+    lateinit var database: FirebaseDatabase
     class ChatViewHolder(view: View):RecyclerView.ViewHolder(view){
         var binding: ChatItemViewBinding = ChatItemViewBinding.bind(view)
     }
@@ -23,10 +30,35 @@ class ChatAdapter(var context: Context,var list: ArrayList<UserInfo>):RecyclerVi
         return ChatViewHolder(view)
     }
 
+
+
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
+        var lastMessage = ""
         var user = list[position]
         Glide.with(context).load(user.imgUri).into(holder.binding.userImg)
-        holder.binding.userName.text = user.name.toString()
+        holder.binding.userName.text = user.name
+
+        database = FirebaseUtils.firebaseDatabase
+        database.reference
+            .child("chats")
+            .child(FirebaseUtils.firebaseAuth.uid+user.uid.toString())
+            .child("message")
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (snapshot1 in snapshot.children) {
+                        val data = snapshot1.getValue(Message::class.java)
+                        lastMessage = data!!.message
+                        println("mujeeb $lastMessage")
+                        holder.binding.lastMessage.text = lastMessage.toString()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+
 
         if(user.activeStatus=="online") {
             holder.binding.onlineStatus.visibility = View.VISIBLE
@@ -35,6 +67,7 @@ class ChatAdapter(var context: Context,var list: ArrayList<UserInfo>):RecyclerVi
             holder.binding.onlineStatus.visibility = View.GONE
             holder.binding.offilneStatus.visibility = View.VISIBLE
         }
+
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context,ChatActivity::class.java)
@@ -51,3 +84,4 @@ class ChatAdapter(var context: Context,var list: ArrayList<UserInfo>):RecyclerVi
         return list.size
     }
 }
+

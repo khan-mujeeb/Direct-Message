@@ -7,6 +7,8 @@ import android.view.View
 
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dm.MainActivity
 import com.example.dm.R
@@ -23,13 +25,20 @@ import com.google.firebase.database.ValueEventListener
 import java.util.Date
 
 class ChatActivity : AppCompatActivity() {
-   private lateinit var binding: ActivityChatBinding
+
+    private lateinit var binding: ActivityChatBinding
+
+    // firebase variable's
    private lateinit var database: FirebaseDatabase
    private lateinit var auth: FirebaseAuth
+
+   // uid's
    private lateinit var senderUid: String
    private lateinit var reciverUid: String
     private lateinit var senderRoom: String
     private lateinit var reciverRoom: String
+
+    // user data variable
     private lateinit var list: ArrayList<Message>
     private lateinit var img:String
     private lateinit var name:String
@@ -44,20 +53,25 @@ class ChatActivity : AppCompatActivity() {
             startActivity(Intent(this,MainActivity::class.java))
         }
 
+        // initialisation of declared variable
         auth = FirebaseUtils.firebaseAuth
+        database = FirebaseUtils.firebaseDatabase
+
         senderUid = auth.uid.toString()
         reciverUid = intent.getStringExtra("uid")!!
-        img = intent.getStringExtra("img")!!
-        name = intent.getStringExtra("name")!!
-        database = FirebaseUtils.firebaseDatabase
         senderRoom = senderUid+reciverUid
         reciverRoom = reciverUid+senderUid
+
+        img = intent.getStringExtra("img")!!
+        name = intent.getStringExtra("name")!!
         list = ArrayList()
 
+        // setting username and dp
         binding.personName.text = name
         Glide.with(this).load(img).into(binding.personImg)
 
 
+        // fetching most recent message from firebase realtime database
         database.reference.child("chats")
             .child(senderRoom)
             .child("message")
@@ -68,6 +82,7 @@ class ChatActivity : AppCompatActivity() {
                         val data = snapshot1.getValue(Message::class.java)
                         list.add(data!!)
                     }
+
                     var activeStatus = intent.getStringExtra("active")
                     if(activeStatus=="online") {
                         binding.onlineStatus.visibility = View.VISIBLE
@@ -86,8 +101,8 @@ class ChatActivity : AppCompatActivity() {
 
             })
 
+        // updating new text to firebase realtime database
         binding.sendBtn.setOnClickListener {
-
             val textMeassage = binding.message.text
             val message = Message(
                 textMeassage.toString(),
@@ -118,7 +133,9 @@ class ChatActivity : AppCompatActivity() {
                 Toast.makeText(this,"Enter your text",Toast.LENGTH_SHORT).show()
             }
         }
+
     }
+
     override fun onResume() {
         super.onResume()
         activeStatus("online")
@@ -129,12 +146,41 @@ class ChatActivity : AppCompatActivity() {
         activeStatus("offline")
     }
 
+    // updating active status of user
     fun activeStatus(status: String) {
-
         database.reference
             .child("users")
             .child(auth.uid.toString())
             .child("activeStatus")
             .setValue(status)
     }
+
 }
+
+
+
+//                    // left swipe to delete the data from firebase realtime db and recycler view
+//                    var itemTouchHelperCallbacks = object : ItemTouchHelper.SimpleCallback(0,
+//                        ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
+//                    ){
+//                        override fun onMove(
+//                            recyclerView: RecyclerView,
+//                            viewHolder: RecyclerView.ViewHolder,
+//                            target: RecyclerView.ViewHolder
+//                        ): Boolean {
+//                            return true
+//                        }
+//
+//                        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                            val pos = viewHolder.adapterPosition
+//
+//
+////                if(adapter.getItemCount()>0){
+//
+//                        }
+//
+//                    }
+//                    // attach swipe to recycler view
+//                    ItemTouchHelper(itemTouchHelperCallbacks).apply {
+//                        attachToRecyclerView(binding.messageRc)
+//                    }

@@ -16,11 +16,13 @@ class Number : AppCompatActivity() {
         binding = ActivityNumberBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // if user is login
         if(FirebaseUtils.firebaseUser!=null) {
             startActivity(Intent(this,MainActivity::class.java))
             finish()
         }
 
+        // go to otp activity
         binding.getOtp.setOnClickListener{
 
             if(checkEditText()) {
@@ -35,6 +37,8 @@ class Number : AppCompatActivity() {
         }
 
     }
+
+    // function to check edittext is empty or not
     fun checkEditText():Boolean {
 
             if (binding.one.text.toString().isNotEmpty() && binding.one.text.toString().length==10) {
@@ -43,6 +47,7 @@ class Number : AppCompatActivity() {
         return false
     }
 
+    // getter to get number
     fun getNumber():String {
         return binding.one.text.toString()
     }

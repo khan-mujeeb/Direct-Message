@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit
 
 class OTP : AppCompatActivity() {
     private lateinit var binding: ActivityOtpBinding
-
     private lateinit var dialog:AlertDialog
     private lateinit var verificationId: String
 
@@ -34,6 +33,7 @@ class OTP : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        // loading dialog
         var builder = AlertDialog.Builder(this)
         builder.setMessage("Loading..")
         builder.setCancelable(false)
@@ -43,6 +43,7 @@ class OTP : AppCompatActivity() {
 
         val phonenumber = "+91"+intent.getStringExtra("number").toString()
         println("number is $phonenumber")
+        // verification
         val options = PhoneAuthOptions.newBuilder(FirebaseUtils.firebaseAuth)
             .setPhoneNumber(phonenumber)
             .setTimeout(60L,TimeUnit.SECONDS)
@@ -80,12 +81,15 @@ class OTP : AppCompatActivity() {
             if(one.isNotEmpty() && two.isNotEmpty() && three.isNotEmpty()
                 && four.isNotEmpty() && five.isNotEmpty() && six.isNotEmpty()) {
                 dialog.show()
+
+                // phone number verification
                 val credential = PhoneAuthProvider.getCredential(verificationId,otp)
                 FirebaseUtils.firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
                     if(it.isSuccessful){
                         dialog.dismiss()
 
 
+                        // if user is present move directly to chat page
                         val database = FirebaseUtils.firebaseDatabase
                         database.reference.child("users")
                             .addValueEventListener(object : ValueEventListener {
@@ -94,7 +98,6 @@ class OTP : AppCompatActivity() {
                                         val user = snapshot1.getValue(UserInfo::class.java)
                                         println("mobile ${user!!.phonenumber} $phonenumber")
                                         if(user!!.phonenumber == phonenumber) {
-                                            Toast.makeText(this@OTP,"true",Toast.LENGTH_LONG).show()
                                             startActivity(Intent(this@OTP,MainActivity::class.java))
                                         }
                                     }

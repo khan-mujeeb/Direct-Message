@@ -33,6 +33,7 @@ class MessageAdapter(var context: Context, var list: ArrayList<Message>): Recycl
         }
     }
 
+
     override fun getItemViewType(position: Int): Int {
         return if(FirebaseUtils.firebaseAuth.uid == list[position].sendUid)
             ITEM_SENT
@@ -51,4 +52,5 @@ class MessageAdapter(var context: Context, var list: ArrayList<Message>): Recycl
     override fun getItemCount(): Int {
         return list.size
     }
+
 }
