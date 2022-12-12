@@ -1,4 +1,3 @@
-![](https://komarev.com/ghpvc/?khan-mujeeb=your-github-khan-mujeeb&color=green)
 # <img  src="https://user-images.githubusercontent.com/89351750/206913190-0f4a807f-640d-4bb5-9b88-7e1053c8b25f.PNG"  width="300" height="150">
 
 **DM is an android-based chat application to connect people around the globe**
