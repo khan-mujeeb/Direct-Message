@@ -5,11 +5,12 @@
 - With Phone Number Authentication
 - Ask for permission used
 - real time chat
+
 - user active status
 
 ## 📽 GIF Demo
 --------------
-<img src="https://user-images.githubusercontent.com/89351750/206915482-40759061-3deb-4a57-83e7-24d45728ba75.gif"  width="850" height="450">
+<img src="https://user-images.githubusercontent.com/89351750/206971327-3020e863-daad-4989-a648-d279b14534bb.gif"  width="250" height="450">
 
 ## ⚙ How it works ?!
 -------------------
