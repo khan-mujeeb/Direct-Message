@@ -1,4 +1,4 @@
-package com.example.dm.adapter
+package com.example.dm.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.dm.R
 import com.example.dm.databinding.ReceverItemViewBinding
 import com.example.dm.databinding.SentItemViewBinding
-import com.example.dm.model.Message
+import com.example.dm.presentation.data.Message
 import com.example.dm.utils.FirebaseUtils
 
 class MessageAdapter(var context: Context, var list: ArrayList<Message>): RecyclerView.Adapter<ViewHolder>() {

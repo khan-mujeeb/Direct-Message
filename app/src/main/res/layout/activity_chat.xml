@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/bg"
     android:layout_height="match_parent"
-    tools:context=".activity.ChatActivity">
+    tools:context=".presentation.activity.ChatActivity">
 
     <LinearLayout
         android:paddingLeft="8dp"

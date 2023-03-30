@@ -1,4 +1,4 @@
-package com.example.dm.ui
+package com.example.dm.presentation.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

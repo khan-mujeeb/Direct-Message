@@ -1,4 +1,4 @@
-package com.example.dm.adapter
+package com.example.dm.presentation.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -6,13 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Visibility
 import com.bumptech.glide.Glide
 import com.example.dm.R
-import com.example.dm.activity.ChatActivity
+import com.example.dm.presentation.activity.ChatActivity
 import com.example.dm.databinding.ChatItemViewBinding
-import com.example.dm.model.Message
-import com.example.dm.model.UserInfo
+import com.example.dm.presentation.data.Message
+import com.example.dm.presentation.data.UserInfo
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -35,7 +34,9 @@ class ChatAdapter(var context: Context,var list: ArrayList<UserInfo>):RecyclerVi
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         var lastMessage = ""
         var user = list[position]
-        Glide.with(context).load(user.imgUri).into(holder.binding.userImg)
+        Glide.with(context).load(user.imgUri)
+            .thumbnail(Glide.with(context).load(R.drawable.spinner))
+            .into(holder.binding.userImg)
         holder.binding.userName.text = user.name
 
         database = FirebaseUtils.firebaseDatabase
@@ -70,7 +71,7 @@ class ChatAdapter(var context: Context,var list: ArrayList<UserInfo>):RecyclerVi
 
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context,ChatActivity::class.java)
+            val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra("active",user.activeStatus)
             intent.putExtra("uid", user.uid)
             intent.putExtra("name",user.name)

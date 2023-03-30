@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:background="@color/darl_blue"
     android:layout_height="match_parent"
-    tools:context=".activity.Number">
+    tools:context=".presentation.account.Number">
 
     <ImageView
         android:layout_marginTop="20dp"

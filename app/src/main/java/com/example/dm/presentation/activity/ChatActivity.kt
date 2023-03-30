@@ -1,4 +1,4 @@
-package com.example.dm.activity
+package com.example.dm.presentation.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,15 +6,10 @@ import android.os.Bundle
 import android.view.View
 
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dm.MainActivity
-import com.example.dm.R
-import com.example.dm.adapter.ChatAdapter
-import com.example.dm.adapter.MessageAdapter
-import com.example.dm.model.Message
+import com.example.dm.presentation.adapter.MessageAdapter
+import com.example.dm.presentation.data.Message
 import com.example.dm.databinding.ActivityChatBinding
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth
@@ -22,7 +17,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import java.util.Date
+import java.util.*
 
 class ChatActivity : AppCompatActivity() {
 
@@ -156,31 +151,3 @@ class ChatActivity : AppCompatActivity() {
     }
 
 }
-
-
-
-//                    // left swipe to delete the data from firebase realtime db and recycler view
-//                    var itemTouchHelperCallbacks = object : ItemTouchHelper.SimpleCallback(0,
-//                        ItemTouchHelper.RIGHT or ItemTouchHelper.LEFT
-//                    ){
-//                        override fun onMove(
-//                            recyclerView: RecyclerView,
-//                            viewHolder: RecyclerView.ViewHolder,
-//                            target: RecyclerView.ViewHolder
-//                        ): Boolean {
-//                            return true
-//                        }
-//
-//                        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                            val pos = viewHolder.adapterPosition
-//
-//
-////                if(adapter.getItemCount()>0){
-//
-//                        }
-//
-//                    }
-//                    // attach swipe to recycler view
-//                    ItemTouchHelper(itemTouchHelperCallbacks).apply {
-//                        attachToRecyclerView(binding.messageRc)
-//                    }

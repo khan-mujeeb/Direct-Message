@@ -18,28 +18,28 @@
         android:theme="@style/Theme.Dm"
         tools:targetApi="31">
         <activity
-            android:name=".activity.ChatActivity"
+            android:name=".presentation.activity.ChatActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activity.Profile"
+            android:name=".presentation.account.Profile"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activity.OTP"
+            android:name=".presentation.account.OTP"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".activity.Number"
+            android:name=".presentation.account.Number"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

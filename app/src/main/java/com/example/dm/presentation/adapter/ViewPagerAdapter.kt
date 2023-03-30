@@ -1,4 +1,4 @@
-package com.example.dm.adapter
+package com.example.dm.presentation.adapter
 
 import android.content.Context
 import androidx.fragment.app.Fragment

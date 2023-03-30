@@ -1,9 +1,8 @@
-package com.example.dm.activity
+package com.example.dm.presentation.account
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.dm.activity.OTP
 import android.widget.Toast
 import com.example.dm.MainActivity
 import com.example.dm.databinding.ActivityNumberBinding
@@ -26,7 +25,7 @@ class Number : AppCompatActivity() {
         binding.getOtp.setOnClickListener{
 
             if(checkEditText()) {
-                val intent = Intent(this,OTP::class.java)
+                val intent = Intent(this, OTP::class.java)
 //                Toast.makeText(this,"Verification Failed ${getNumber()}",Toast.LENGTH_SHORT).show()
                 intent.putExtra("number",getNumber())
                 startActivity(intent)

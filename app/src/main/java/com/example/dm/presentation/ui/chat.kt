@@ -1,18 +1,13 @@
-package com.example.dm.ui
+package com.example.dm.presentation.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.FragmentContainer
-import com.example.dm.MainActivity
-import com.example.dm.R
-import com.example.dm.adapter.ChatAdapter
+import com.example.dm.presentation.adapter.ChatAdapter
 import com.example.dm.databinding.FragmentChatBinding
-import com.example.dm.model.UserInfo
+import com.example.dm.presentation.data.UserInfo
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -29,9 +24,8 @@ class chat : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentChatBinding.inflate(layoutInflater)
-
-
         userList = ArrayList()
         auth = FirebaseUtils.firebaseAuth
         database = FirebaseUtils.firebaseDatabase

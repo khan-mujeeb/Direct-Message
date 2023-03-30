@@ -1,7 +1,6 @@
-package com.example.dm.activity
+package com.example.dm.presentation.account
 
 import android.Manifest
-import android.R
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -14,7 +13,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dm.MainActivity
 import com.example.dm.databinding.ActivityProfileBinding
-import com.example.dm.model.UserInfo
+import com.example.dm.presentation.data.UserInfo
+import com.example.dm.utils.DialogUtils
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -22,17 +22,15 @@ import com.google.firebase.storage.FirebaseStorage
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import java.io.IOException
-import java.io.InputStream
 import java.util.*
 
 
 class Profile : AppCompatActivity() {
 
 
-    private lateinit var dialog:AlertDialog
+    private lateinit var dialog: AlertDialog
     private lateinit var storage: FirebaseStorage
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
@@ -44,19 +42,15 @@ class Profile : AppCompatActivity() {
         setContentView(binding.root)
 
         // photo select button
+        dialog = DialogUtils.buildLoadingDialog(this@Profile)
         binding.card.setOnClickListener {
             choosePhotoFromGallery()
         }
 
         // finish button
         binding.finishBtn.setOnClickListener {
-
             val name = binding.nameEdtxt.text.toString()
-            if(name.isNotEmpty() && check==1) {
-                var builder = AlertDialog.Builder(this)
-                builder.setMessage("Loading..")
-                builder.setCancelable(false)
-                dialog = builder.create()
+            if(name.isNotEmpty() && check ==1) {
                 dialog.show()
                 uploadData()
             }else {
@@ -74,7 +68,7 @@ class Profile : AppCompatActivity() {
     // function to upload data of newly created user
     private fun uploadData() {
         val reference = storage.reference.child("Profile").child(Date().time.toString())
-        reference.putFile(contentUri).addOnCompleteListener{task->
+        reference.putFile(contentUri).addOnCompleteListener{ task->
             if(task.isSuccessful) {
                 reference.downloadUrl.addOnSuccessListener { uri ->
                     uploadDataInfo(uri.toString())
@@ -85,6 +79,8 @@ class Profile : AppCompatActivity() {
 
 //    function to create user
     private fun uploadDataInfo(imgUri: String) {
+
+
 
         val user = UserInfo(auth.uid.toString(),
             binding.nameEdtxt.text.toString(),
@@ -120,7 +116,7 @@ class Profile : AppCompatActivity() {
                     }
                 }
                 override fun onPermissionRationaleShouldBeShown(
-                    permissions: MutableList<PermissionRequest>?,
+                    permissions: MutableList<com.karumi.dexter.listener.PermissionRequest>?,
                     token: PermissionToken?) {
                     showDialogForPermissions()
                 }
@@ -130,7 +126,7 @@ class Profile : AppCompatActivity() {
 
     // function for storage permission
     fun showDialogForPermissions() {
-        androidx.appcompat.app.AlertDialog.Builder(this).setMessage("" +
+        AlertDialog.Builder(this).setMessage("" +
                 "Allow permission to use this feature"
         ).setPositiveButton("Go to Settings") {
                 _, _ ->

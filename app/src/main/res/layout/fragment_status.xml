@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:background="@color/white"
-    tools:context=".ui.status">
+    tools:context=".presentation.ui.status">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
