@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dm.MainActivity
 import com.example.dm.databinding.ActivityOtpBinding
 import com.example.dm.presentation.data.UserInfo
-import com.example.dm.utils.DialogUtils
 import com.example.dm.utils.DialogUtils.buildLoadingDialog
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.FirebaseException
@@ -31,7 +30,7 @@ class OTP : AppCompatActivity() {
         setContentView(binding.root)
 
         // loading dialog
-        dialog = DialogUtils.buildLoadingDialog(this@OTP)
+        dialog = buildLoadingDialog(this@OTP)
 
 
         val phonenumber = "+91" + intent.getStringExtra("number").toString()
@@ -63,17 +62,9 @@ class OTP : AppCompatActivity() {
         PhoneAuthProvider.verifyPhoneNumber(options)
 
         binding.verify.setOnClickListener {
-            val one = binding.one.text.toString()
-            val two = binding.two.text.toString()
-            val three = binding.three.text.toString()
-            val four = binding.four.text.toString()
-            val five = binding.five.text.toString()
-            val six = binding.six.text.toString()
 
-            val otp = "${one}${two}${three}${four}${five}${six}"
-            if (one.isNotEmpty() && two.isNotEmpty() && three.isNotEmpty()
-                && four.isNotEmpty() && five.isNotEmpty() && six.isNotEmpty()
-            ) {
+            val otp = binding.one.text.toString()
+            if (otp.isNotEmpty()) {
                 dialog.show()
 
                 // phone number verification

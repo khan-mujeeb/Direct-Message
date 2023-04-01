@@ -40,9 +40,20 @@ class Profile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        variableInit()
+        subscribeClickListner()
+    }
 
-        // photo select button
+    private fun variableInit() {
         dialog = DialogUtils.buildLoadingDialog(this@Profile)
+        // firebase variable initialisation
+        storage = FirebaseUtils.firebaseStorage
+        database = FirebaseUtils.firebaseDatabase
+        auth = FirebaseUtils.firebaseAuth
+    }
+
+    private fun subscribeClickListner() {
+
         binding.card.setOnClickListener {
             choosePhotoFromGallery()
         }
@@ -57,12 +68,6 @@ class Profile : AppCompatActivity() {
                 Toast.makeText(this,"Enter your name",Toast.LENGTH_SHORT).show()
             }
         }
-
-        // firebase variable initialisation
-        storage = FirebaseUtils.firebaseStorage
-        database = FirebaseUtils.firebaseDatabase
-        auth = FirebaseUtils.firebaseAuth
-
     }
 
     // function to upload data of newly created user

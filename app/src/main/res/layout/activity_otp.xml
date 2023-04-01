@@ -44,82 +44,9 @@
             android:importantForAutofill="no"
             tools:ignore="LabelFor"
             android:id="@+id/one"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="number" />
-
-        <EditText
-            android:layout_margin="1dp"
-            android:background="@drawable/edittext_bg"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:id="@+id/two"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="number" />
-
-        <EditText
-            android:layout_margin="1dp"
-            android:background="@drawable/edittext_bg"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:id="@+id/three"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="number" />
-
-        <EditText
-            android:gravity="center"
-            android:layout_margin="1dp"
-            android:background="@drawable/edittext_bg"
-            android:textColor="@color/black"
-            android:id="@+id/four"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="number" />
-
-        <EditText
-
-            android:layout_margin="1dp"
-            android:background="@drawable/edittext_bg"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:id="@+id/five"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="number" />
-
-        <EditText
-            android:layout_margin="1dp"
-            android:background="@drawable/edittext_bg"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            android:id="@+id/six"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            android:hint="@string/enter_your_otp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
