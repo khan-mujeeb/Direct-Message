@@ -6,4 +6,8 @@
     <string name="profile_info">Profile Info</string>
     <string name="finish">Finish</string>
     <string name="enter_your_otp">Enter your OTP</string>
+    <string name="we_will_send_you_an_one_time_password_on_this_mobile_number">We will send you an One Time Password on this Mobile Number</string>
+    <string name="enter_your_phone_number">Enter Your Phone Number</string>
+    <string name="enter_the_otp_send_to">Enter the OTP Send to</string>
+    <string name="verify">Verify</string>
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isNotEmpty
 import com.example.dm.MainActivity
 import com.example.dm.databinding.ActivityOtpBinding
 import com.example.dm.presentation.data.UserInfo
@@ -23,18 +24,18 @@ class OTP : AppCompatActivity() {
     private lateinit var binding: ActivityOtpBinding
     private lateinit var dialog: AlertDialog
     private lateinit var verificationId: String
+    private lateinit var phonenumber: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityOtpBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        // loading dialog
-        dialog = buildLoadingDialog(this@OTP)
+        variableInit()
+        subscribeUi()
 
+        dialog.show()
 
-        val phonenumber = "+91" + intent.getStringExtra("number").toString()
-        println("number is $phonenumber")
         // verification
         val options = PhoneAuthOptions.newBuilder(FirebaseUtils.firebaseAuth)
             .setPhoneNumber(phonenumber)
@@ -54,6 +55,7 @@ class OTP : AppCompatActivity() {
                     super.onCodeSent(p0, p1)
                     dialog.dismiss()
                     verificationId = p0
+                    dialog.dismiss()
                     println("mujeeb $verificationId")
                 }
 
@@ -63,7 +65,7 @@ class OTP : AppCompatActivity() {
 
         binding.verify.setOnClickListener {
 
-            val otp = binding.one.text.toString()
+            val otp = binding.otpEt.editText!!.text.toString()
             if (otp.isNotEmpty()) {
                 dialog.show()
 
@@ -111,6 +113,18 @@ class OTP : AppCompatActivity() {
                 Toast.makeText(this@OTP, "Enter OTP", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun subscribeUi() {
+        binding.numberTv.text = phonenumber
+    }
+
+    private fun variableInit() {
+
+        phonenumber = "+91" + intent.getStringExtra("number").toString()
+
+        // loading dialog
+        dialog = buildLoadingDialog(this@OTP)
     }
 
 

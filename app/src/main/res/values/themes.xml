@@ -10,6 +10,7 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
+        <item name="fontFamily">@font/poppins</item>
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
@@ -17,7 +18,7 @@
     <!-- Alert Dialog -->
     <style name="ThemeOverlay.MaterialComponents.MaterialAlertDialog_Background" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <!-- Background Color-->
-        <item name="android:background">@color/baby_blue</item>
+        <item name="android:background">@color/white</item>
         <!-- Text Color for title and message -->
         <item name="colorOnSurface">@color/white</item>
     </style>

@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="hint">#2F2D2D</color>
+    <color name="sea_green">#1A936F</color>
     <color name="yelloe">#cccc00</color>
     <color name="ovlib_green">#3D550C</color>
     <color name="midnight_blue">#145DA0</color>

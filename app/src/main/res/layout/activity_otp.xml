@@ -2,66 +2,91 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
     android:layout_width="match_parent"
-    android:background="@color/darl_blue"
     android:layout_height="match_parent"
+    android:background="@color/darl_blue"
+    android:gravity="center"
+    android:padding="20dp"
+    android:orientation="vertical"
     tools:context=".presentation.account.Number">
 
-    <ImageView
 
-        android:layout_marginTop="50dp"
+    <ImageView
         android:id="@+id/photu"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
-        android:src="@drawable/authentication"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/received"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-
-        android:id="@+id/linearLayout"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/photu">
-
-        <EditText
-            android:layout_margin="1dp"
-            android:background="@drawable/edittext_bg"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:imeOptions="actionNext"
-            android:importantForAutofill="no"
-            tools:ignore="LabelFor"
-            android:id="@+id/one"
-            android:textAlignment="center"
-            android:textSize="22sp"
-            android:hint="@string/enter_your_otp"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:inputType="number" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/verify"
-        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="8dp"
+        android:text="OTP Verification"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/enter_the_otp_send_to"
+        android:textAlignment="center"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/numberTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/white" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/otpEt"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:hint="@string/enter_your_otp"
+        android:textColorHint="@color/hint"
+        android:layout_marginHorizontal="20dp"
+        app:boxBackgroundColor="@color/white"
+        app:endIconMode="clear_text"
+        app:hintTextColor="@color/black"
+        app:boxStrokeColor="@color/yelloe"
+        app:endIconTint="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:fontFamily="@font/poppins"
+            android:inputType="number"
+            android:maxLength="6"
+            android:maxLines="1"
+            android:textColor="@color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/ui_btn_bg"
-        android:text="Verify"
         android:padding="10dp"
+        android:textColor="@color/white"
+        android:layout_marginHorizontal="20dp"
+        android:text="@string/verify"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
