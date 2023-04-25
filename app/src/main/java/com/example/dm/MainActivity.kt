@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         database = FirebaseUtils.firebaseDatabase
         auth = FirebaseUtils.firebaseAuth
-        setContentView(binding!!.root)
+        setContentView(binding.root)
 
         goToSignup()
         switchFragment()

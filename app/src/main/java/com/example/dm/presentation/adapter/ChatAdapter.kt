@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class ChatAdapter(var context: Context,var list: ArrayList<UserInfo>):RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
+class ChatAdapter(var context: Context,var list: List<UserInfo>):RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
     lateinit var database: FirebaseDatabase
     class ChatViewHolder(view: View):RecyclerView.ViewHolder(view){
         var binding: ChatItemViewBinding = ChatItemViewBinding.bind(view)
