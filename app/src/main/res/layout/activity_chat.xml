@@ -68,6 +68,7 @@
         android:layout_weight="8"
         android:orientation="vertical"
         android:id="@+id/ll"
+        android:layout_marginBottom="3dp"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <androidx.recyclerview.widget.RecyclerView
@@ -90,26 +91,18 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.google.android.material.card.MaterialCardView
-            android:elevation="10dp"
-            android:layout_width="0dp"
-            android:backgroundTint="@color/baby_blue"
-            android:layout_weight="8"
-            app:cardCornerRadius="30dp"
-            android:layout_height="wrap_content">
-            <EditText
 
-                android:layout_gravity="start"
+            <EditText
                 android:id="@+id/message"
                 android:inputType="textMultiLine"
-                android:background="@drawable/receiver_edittext_bg"
+                android:background="@drawable/edittext_bg"
                 android:padding="10dp"
                 android:textSize="16sp"
                 android:textColor="@color/black"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="8"
                 android:hint="Message"
                 android:layout_height="wrap_content"/>
-        </com.google.android.material.card.MaterialCardView>
         <LinearLayout
             android:background="@drawable/sned_btn_bg"
             android:gravity="center"

@@ -1,84 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="8dp"
-    android:elevation="20dp"
     android:layout_width="match_parent"
+    android:layout_height="75dp"
     android:layout_margin="1dp"
-    android:orientation="horizontal"
     android:background="@color/white"
-    android:layout_height="wrap_content">
+    android:elevation="20dp"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
     <RelativeLayout
         android:layout_width="50dp"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/user_img"
             android:layout_width="50dp"
-            android:src="@drawable/ic_baseline_person_24"
-            android:layout_height="50dp"/>
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:visibility="gone"
-            android:id="@+id/offilne_status"
-            android:elevation="10dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:src="@drawable/offline_circle"
-            android:layout_height="wrap_content"/>
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_person_24" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:visibility="gone"
-            android:id="@+id/online_status"
-            android:elevation="10dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:id="@+id/offilne_status"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:elevation="10dp"
+            android:src="@drawable/offline_circle"
+            android:visibility="gone" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/online_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:elevation="10dp"
             android:src="@drawable/online_circle"
-            android:layout_height="wrap_content"/>
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginStart="10dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical">
 
 
         <TextView
             android:id="@+id/user_name"
-            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:text="Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textStyle="bold" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/last_message"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:text="Touch me to view text"
-                android:layout_width="0dp"
-                android:layout_weight="8"
-                android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <TextView
-                android:visibility="gone"
-                android:textStyle="bold"
-                android:gravity="center|center_vertical"
-                android:background="@drawable/online_circle"
+                android:id="@+id/last_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/noOfUnReadMessage"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/online_circle"
+                android:gravity="center|center_vertical"
                 android:text="1"
                 android:textColor="@color/midnight_blue"
                 android:textSize="16sp"
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold"
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>
