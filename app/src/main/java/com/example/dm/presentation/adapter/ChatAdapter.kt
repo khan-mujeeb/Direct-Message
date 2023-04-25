@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide
 import com.example.dm.R
 import com.example.dm.presentation.activity.ChatActivity
 import com.example.dm.databinding.ChatItemViewBinding
-import com.example.dm.presentation.data.Message
-import com.example.dm.presentation.data.UserInfo
+import com.example.dm.presentation.data.model.Message
+import com.example.dm.presentation.data.model.UserInfo
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

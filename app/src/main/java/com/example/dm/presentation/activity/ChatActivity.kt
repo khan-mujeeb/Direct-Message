@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.dm.MainActivity
 import com.example.dm.presentation.adapter.MessageAdapter
-import com.example.dm.presentation.data.Message
+import com.example.dm.presentation.data.model.Message
 import com.example.dm.databinding.ActivityChatBinding
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth

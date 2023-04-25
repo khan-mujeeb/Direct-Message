@@ -5,10 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isNotEmpty
 import com.example.dm.MainActivity
 import com.example.dm.databinding.ActivityOtpBinding
-import com.example.dm.presentation.data.UserInfo
+import com.example.dm.presentation.data.model.UserInfo
 import com.example.dm.utils.DialogUtils.buildLoadingDialog
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.FirebaseException

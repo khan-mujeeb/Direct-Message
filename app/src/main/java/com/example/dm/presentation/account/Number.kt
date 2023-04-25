@@ -16,7 +16,7 @@ class Number : AppCompatActivity() {
         binding = ActivityNumberBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        subscribeUi()
+//        subscribeUi()
         subscribeCLickEvent()
 
     }

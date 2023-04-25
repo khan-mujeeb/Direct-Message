@@ -1,4 +1,4 @@
-package com.example.dm.presentation.data
+package com.example.dm.presentation.data.model
 
 data class UserInfo(
     val uid: String = "",

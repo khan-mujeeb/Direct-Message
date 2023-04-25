@@ -28,11 +28,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         database = FirebaseUtils.firebaseDatabase
         auth = FirebaseUtils.firebaseAuth
-
         setContentView(binding!!.root)
 
-        switchFragment()
         goToSignup()
+        switchFragment()
     }
     fun switchFragment() {
         val fragmentList = ArrayList<Fragment>()

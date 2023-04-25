@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.dm.presentation.adapter.ChatAdapter
 import com.example.dm.databinding.FragmentChatBinding
-import com.example.dm.presentation.data.UserInfo
+import com.example.dm.presentation.data.model.UserInfo
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

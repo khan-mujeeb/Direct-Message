@@ -20,6 +20,6 @@
         <!-- Background Color-->
         <item name="android:background">@color/white</item>
         <!-- Text Color for title and message -->
-        <item name="colorOnSurface">@color/white</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
