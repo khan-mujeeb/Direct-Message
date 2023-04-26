@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.view.View
 
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.dm.presentation.adapter.MessageAdapter
 import com.example.dm.data.model.Message
+import com.example.dm.data.viewmodel.ViewModel
 import com.example.dm.databinding.ActivityChatBinding
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth
@@ -23,19 +25,21 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChatBinding
 
     // firebase variable's
-   private lateinit var database: FirebaseDatabase
-   private lateinit var auth: FirebaseAuth
+    private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
 
-   // uid's
-   private lateinit var senderUid: String
-   private lateinit var reciverUid: String
+    // uid's
+    private lateinit var senderUid: String
+    private lateinit var reciverUid: String
     private lateinit var senderRoom: String
     private lateinit var reciverRoom: String
 
     // user data variable
     private lateinit var list: ArrayList<Message>
-    private lateinit var img:String
-    private lateinit var name:String
+    private lateinit var img: String
+    private lateinit var name: String
+
+    lateinit var viewModel: ViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,10 +55,13 @@ class ChatActivity : AppCompatActivity() {
         auth = FirebaseUtils.firebaseAuth
         database = FirebaseUtils.firebaseDatabase
 
+
+        viewModel = ViewModelProvider(this)[ViewModel::class.java]
+
         senderUid = auth.uid.toString()
         reciverUid = intent.getStringExtra("uid")!!
-        senderRoom = senderUid+reciverUid
-        reciverRoom = reciverUid+senderUid
+        senderRoom = senderUid + reciverUid
+        reciverRoom = reciverUid + senderUid
 
         img = intent.getStringExtra("img")!!
         name = intent.getStringExtra("name")!!
@@ -69,7 +76,7 @@ class ChatActivity : AppCompatActivity() {
         database.reference.child("chats")
             .child(senderRoom)
             .child("message")
-            .addValueEventListener(object: ValueEventListener {
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     list.clear()
                     for (snapshot1 in snapshot.children) {
@@ -78,15 +85,20 @@ class ChatActivity : AppCompatActivity() {
                     }
 
                     var activeStatus = intent.getStringExtra("active")
-                    if(activeStatus=="online") {
+                    if (activeStatus == "online") {
                         binding.onlineStatus.visibility = View.VISIBLE
                         binding.offilneStatus.visibility = View.GONE
-                    }else {
+                    } else {
                         binding.onlineStatus.visibility = View.GONE
                         binding.offilneStatus.visibility = View.VISIBLE
                     }
-                    binding.messageRc.adapter = MessageAdapter(this@ChatActivity,list)
-                    binding.messageRc.smoothScrollToPosition(MessageAdapter(this@ChatActivity,list).itemCount);
+                    binding.messageRc.adapter = MessageAdapter(this@ChatActivity, list)
+                    binding.messageRc.smoothScrollToPosition(
+                        MessageAdapter(
+                            this@ChatActivity,
+                            list
+                        ).itemCount
+                    );
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -103,28 +115,17 @@ class ChatActivity : AppCompatActivity() {
                 senderUid,
                 Date().time
             )
-            val randomkey = database.reference.push().key
-            if(textMeassage.isNotEmpty()) {
-                database.reference
-                    .child("chats")
-                    .child(senderRoom)
-                    .child("message")
-                    .child(randomkey!!)
-                    .setValue(message)
-                    .addOnSuccessListener {
-
-                        database.reference
-                            .child("chats")
-                            .child(reciverRoom)
-                            .child("message")
-                            .child(randomkey!!)
-                            .setValue(message)
-                            .addOnSuccessListener {
-                                binding.message.text = null
-                            }
-                    }
+            val randomkey = database.reference.push().key!!
+            if (textMeassage.isNotEmpty()) {
+                binding.message.text = null
+                viewModel.sendMessages(
+                    senderRoom = senderRoom,
+                    reciverRoom = reciverRoom,
+                    randomkey = randomkey,
+                    message = message
+                )
             } else {
-                Toast.makeText(this,"Enter your text",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Enter your text", Toast.LENGTH_SHORT).show()
             }
         }
 

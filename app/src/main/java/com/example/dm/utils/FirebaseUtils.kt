@@ -6,6 +6,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 
 object FirebaseUtils {
+
+        // basic ref
         var firebaseAuth = FirebaseAuth.getInstance()
         var firebaseUser = firebaseAuth.currentUser
         var firebaseStorage = FirebaseStorage.getInstance()
@@ -13,4 +15,5 @@ object FirebaseUtils {
 
 
         var userRef = firebaseDatabase.getReference(userNode)
+
 }

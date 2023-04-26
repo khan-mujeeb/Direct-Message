@@ -10,4 +10,8 @@
     <string name="enter_your_phone_number">Enter Your Phone Number</string>
     <string name="enter_the_otp_send_to">Enter the OTP Send to</string>
     <string name="verify">Verify</string>
+    <string name="name">Name</string>
+    <string name="about">About</string>
+    <string name="phone">Phone</string>
+    <string name="profile">Profile</string>
 </resources>

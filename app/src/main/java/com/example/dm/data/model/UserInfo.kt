@@ -5,5 +5,6 @@ data class UserInfo(
     val name: String = "",
     val phonenumber: String = "",
     val imgUri: String = "",
-    val activeStatus: String = ""
+    val activeStatus: String = "",
+    val about: String = ""
 )

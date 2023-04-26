@@ -1,22 +1,17 @@
 package com.example.dm.presentation.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.dm.R
-import com.example.dm.presentation.account.Number
-import com.example.dm.presentation.adapter.ViewPagerAdapter
 import com.example.dm.databinding.ActivityMainBinding
+import com.example.dm.presentation.adapter.ViewPagerAdapter
 import com.example.dm.presentation.ui.chat
 import com.example.dm.presentation.ui.status
-import com.example.dm.utils.FirebaseUtils
-import com.example.dm.utils.FirebaseUtils.firebaseAuth
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,9 +53,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.editProfile -> Toast.makeText(this, "edit profile", Toast.LENGTH_SHORT).show()
+            R.id.editProfile -> {
+                startActivity(Intent(this, EditProfile::class.java))
+            }
             R.id.setting -> Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
-            R.id.logout -> Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show()
+            R.id.logout -> {
+                Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show()
+            }
             R.id.addContact -> Toast.makeText(this, "add contact", Toast.LENGTH_SHORT).show()
         }
         return super.onOptionsItemSelected(item)

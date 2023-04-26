@@ -11,6 +11,7 @@ import com.example.dm.databinding.FragmentChatBinding
 import com.example.dm.data.model.UserInfo
 import com.example.dm.data.viewmodel.ViewModel
 import com.example.dm.utils.FirebaseUtils
+import com.example.dm.utils.FirebaseUtils.firebaseAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -44,7 +45,8 @@ class chat : Fragment() {
         viewModel.getUserList { userList ->
             val users = mutableListOf<UserInfo>()
             for (user in userList) {
-                if (user.uid != FirebaseUtils.firebaseAuth.uid) {
+                println("${user.uid}  ${firebaseAuth.uid}")
+                if (user.uid != firebaseAuth.uid) {
                     users.add(user)
                 }
             }
@@ -60,23 +62,23 @@ class chat : Fragment() {
         database = FirebaseUtils.firebaseDatabase
     }
 
-    override fun onResume() {
-        super.onResume()
-        activeStatus("online")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        activeStatus("offline")
-    }
-
-    fun activeStatus(status: String) {
-
-        database.reference
-            .child("users")
-            .child(auth.uid.toString())
-            .child("activeStatus")
-            .setValue(status)
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        activeStatus("online")
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        activeStatus("offline")
+//    }
+//
+//    fun activeStatus(status: String) {
+//
+//        database.reference
+//            .child("users")
+//            .child(auth.uid.toString())
+//            .child("activeStatus")
+//            .setValue(status)
+//    }
 
 }

@@ -1,5 +1,6 @@
 package com.example.dm.data.viewmodel
 
+import com.example.dm.data.model.Message
 import com.example.dm.data.model.UserInfo
 import com.example.dm.data.repository.Repository
 
@@ -12,5 +13,9 @@ class ViewModel(private val repository: Repository = Repository()): androidx.lif
         repository.getUserList { task ->
             callback(task)
         }
+    }
+
+    fun sendMessages(senderRoom: String, reciverRoom: String, message: Message, randomkey: String) {
+        repository.sendMessages(senderRoom, reciverRoom, message, randomkey)
     }
 }

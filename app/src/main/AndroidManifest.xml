@@ -5,7 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
     <application
@@ -18,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dm"
         tools:targetApi="31">
+        <activity
+            android:name=".presentation.activity.EditProfile"
+            android:exported="false" />
         <activity
             android:name=".presentation.activity.ChatActivity"
             android:exported="false">
@@ -47,6 +51,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
