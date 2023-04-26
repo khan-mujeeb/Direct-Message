@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:focusable="true"
+                android:focusable="false"
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/black" />
@@ -106,6 +106,14 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/update"
+            android:text="@string/update"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/ui_btn_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -58,4 +58,17 @@ class Repository {
                     }
             }
     }
+
+
+    /*
+    get user info
+     */
+    fun updateUserInfo(name: String, about: String, userId: String) {
+        val updates = mapOf<String, Any>(
+            "name" to name,
+            "about" to about
+        )
+        userRef.child(userId).updateChildren(updates)
+
+    }
 }

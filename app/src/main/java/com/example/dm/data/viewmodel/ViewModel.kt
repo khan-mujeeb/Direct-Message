@@ -18,4 +18,9 @@ class ViewModel(private val repository: Repository = Repository()): androidx.lif
     fun sendMessages(senderRoom: String, reciverRoom: String, message: Message, randomkey: String) {
         repository.sendMessages(senderRoom, reciverRoom, message, randomkey)
     }
+
+
+    fun updateUserInfo(name: String, about: String, userId: String) {
+        repository.updateUserInfo(name, about, userId)
+    }
 }
