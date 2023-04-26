@@ -1,4 +1,4 @@
-package com.example.dm.presentation.data.model
+package com.example.dm.data.model
 
 data class Message(
     var message:String = "",

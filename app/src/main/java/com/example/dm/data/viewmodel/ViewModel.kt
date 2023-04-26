@@ -1,7 +1,7 @@
-package com.example.dm.presentation.data.viewmodel
+package com.example.dm.data.viewmodel
 
-import com.example.dm.presentation.data.model.UserInfo
-import com.example.dm.presentation.data.repository.Repository
+import com.example.dm.data.model.UserInfo
+import com.example.dm.data.repository.Repository
 
 class ViewModel(private val repository: Repository = Repository()): androidx.lifecycle.ViewModel() {
 

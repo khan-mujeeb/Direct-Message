@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.dm.MainActivity
+import com.example.dm.presentation.activity.MainActivity
 import com.example.dm.databinding.ActivityOtpBinding
-import com.example.dm.presentation.data.model.UserInfo
+import com.example.dm.data.model.UserInfo
 import com.example.dm.utils.DialogUtils.buildLoadingDialog
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.FirebaseException
@@ -33,10 +33,29 @@ class OTP : AppCompatActivity() {
         variableInit()
         subscribeUi()
 
-        dialog.show()
+        val options = getOTP()
 
-        // verification
-        val options = PhoneAuthOptions.newBuilder(FirebaseUtils.firebaseAuth)
+        PhoneAuthProvider.verifyPhoneNumber(options)
+        subscribeOnClickEvents()
+
+    }
+
+    private fun subscribeOnClickEvents() {
+        binding.verify.setOnClickListener {
+
+            val otp = binding.otpEt.editText!!.text.toString()
+            if (otp.isNotEmpty()) {
+                dialog.show()
+                otpVerification(otp)
+            } else {
+                Toast.makeText(this@OTP, "Enter OTP", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun getOTP(): PhoneAuthOptions {
+        dialog.show()
+        return PhoneAuthOptions.newBuilder(FirebaseUtils.firebaseAuth)
             .setPhoneNumber(phonenumber)
             .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(this)
@@ -59,57 +78,20 @@ class OTP : AppCompatActivity() {
                 }
 
             }).build()
+    }
 
-        PhoneAuthProvider.verifyPhoneNumber(options)
+    private fun otpVerification(otp: String) {
 
-        binding.verify.setOnClickListener {
-
-            val otp = binding.otpEt.editText!!.text.toString()
-            if (otp.isNotEmpty()) {
-                dialog.show()
-
-                // phone number verification
-                val credential = PhoneAuthProvider.getCredential(verificationId, otp)
-                FirebaseUtils.firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        dialog.dismiss()
-
-
-                        // if user is present move directly to chat page
-                        val database = FirebaseUtils.firebaseDatabase
-                        database.reference.child("users")
-                            .addValueEventListener(object : ValueEventListener {
-                                override fun onDataChange(snapshot: DataSnapshot) {
-                                    for (snapshot1 in snapshot.children) {
-                                        val user = snapshot1.getValue(UserInfo::class.java)
-                                        println("mobile ${user!!.phonenumber} $phonenumber")
-                                        if (user!!.phonenumber == phonenumber) {
-                                            startActivity(
-                                                Intent(
-                                                    this@OTP,
-                                                    MainActivity::class.java
-                                                )
-                                            )
-                                        }
-                                    }
-                                }
-
-                                override fun onCancelled(error: DatabaseError) {
-
-                                }
-
-                            })
-
-                        startActivity(Intent(this, Profile::class.java))
-                        finish()
-                    } else {
-                        dialog.dismiss()
-                        Toast.makeText(this@OTP, "${it.exception}", Toast.LENGTH_LONG).show()
-                    }
-                }
-
+        // otp verification
+        val credential = PhoneAuthProvider.getCredential(verificationId, otp)
+        FirebaseUtils.firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
+            if (it.isSuccessful) {
+                dialog.dismiss()
+                startActivity(Intent(this, Profile::class.java))
+                finish()
             } else {
-                Toast.makeText(this@OTP, "Enter OTP", Toast.LENGTH_LONG).show()
+                dialog.dismiss()
+                Toast.makeText(this@OTP, "${it.exception}", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -121,7 +103,7 @@ class OTP : AppCompatActivity() {
     private fun variableInit() {
 
         phonenumber = "+91" + intent.getStringExtra("number").toString()
-
+5
         // loading dialog
         dialog = buildLoadingDialog(this@OTP)
     }

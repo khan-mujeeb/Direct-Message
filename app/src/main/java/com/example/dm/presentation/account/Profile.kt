@@ -12,11 +12,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.dm.MainActivity
+import com.example.dm.presentation.activity.MainActivity
 import com.example.dm.databinding.ActivityProfileBinding
-import com.example.dm.presentation.activity.ChatActivity
-import com.example.dm.presentation.data.model.UserInfo
-import com.example.dm.presentation.data.viewmodel.ViewModel
+import com.example.dm.data.model.UserInfo
+import com.example.dm.data.viewmodel.ViewModel
 import com.example.dm.utils.DialogUtils
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth
@@ -46,7 +45,6 @@ class Profile : AppCompatActivity() {
         setContentView(binding.root)
         variableInit()
         checkUserAviablity()
-
         subscribeClickListner()
     }
 
@@ -56,7 +54,6 @@ class Profile : AppCompatActivity() {
             for (user in userList) {
                 if (user.phonenumber == auth.currentUser!!.phoneNumber) {
                     dialog.dismiss()
-                    println(" ${user.phonenumber}  ${auth.currentUser!!.phoneNumber}")
                     Toast.makeText(this, "welcome", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MainActivity::class.java))
                 }

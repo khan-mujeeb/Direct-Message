@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.dm.presentation.adapter.ChatAdapter
 import com.example.dm.databinding.FragmentChatBinding
-import com.example.dm.presentation.data.model.UserInfo
-import com.example.dm.presentation.data.viewmodel.ViewModel
+import com.example.dm.data.model.UserInfo
+import com.example.dm.data.viewmodel.ViewModel
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -27,7 +27,7 @@ class chat : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         varibaleInit()
         subscribeUi()

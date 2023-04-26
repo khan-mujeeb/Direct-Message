@@ -7,9 +7,8 @@ import android.view.View
 
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import com.example.dm.MainActivity
 import com.example.dm.presentation.adapter.MessageAdapter
-import com.example.dm.presentation.data.model.Message
+import com.example.dm.data.model.Message
 import com.example.dm.databinding.ActivityChatBinding
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.auth.FirebaseAuth
@@ -45,7 +44,7 @@ class ChatActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.back.setOnClickListener {
-            startActivity(Intent(this,MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
         }
 
         // initialisation of declared variable

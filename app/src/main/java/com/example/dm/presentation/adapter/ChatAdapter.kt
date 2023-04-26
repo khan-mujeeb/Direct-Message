@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide
 import com.example.dm.R
 import com.example.dm.presentation.activity.ChatActivity
 import com.example.dm.databinding.ChatItemViewBinding
-import com.example.dm.presentation.data.model.Message
-import com.example.dm.presentation.data.model.UserInfo
+import com.example.dm.data.model.Message
+import com.example.dm.data.model.UserInfo
 import com.example.dm.utils.FirebaseUtils
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -39,27 +39,7 @@ class ChatAdapter(var context: Context,var list: List<UserInfo>):RecyclerView.Ad
             .into(holder.binding.userImg)
         holder.binding.userName.text = user.name
 
-        database = FirebaseUtils.firebaseDatabase
-        database.reference
-            .child("chats")
-            .child(FirebaseUtils.firebaseAuth.uid+user.uid.toString())
-            .child("message")
-            .addValueEventListener(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (snapshot1 in snapshot.children) {
-                        val data = snapshot1.getValue(Message::class.java)
-                        lastMessage = data!!.message
-                        println("mujeeb $lastMessage")
-                        holder.binding.lastMessage.text = lastMessage.toString()
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-
+//        55
 
         if(user.activeStatus=="online") {
             holder.binding.onlineStatus.visibility = View.VISIBLE

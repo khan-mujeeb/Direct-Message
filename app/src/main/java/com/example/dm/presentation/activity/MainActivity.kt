@@ -1,15 +1,20 @@
-package com.example.dm
+package com.example.dm.presentation.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.dm.R
 import com.example.dm.presentation.account.Number
 import com.example.dm.presentation.adapter.ViewPagerAdapter
 import com.example.dm.databinding.ActivityMainBinding
 import com.example.dm.presentation.ui.chat
 import com.example.dm.presentation.ui.status
 import com.example.dm.utils.FirebaseUtils
+import com.example.dm.utils.FirebaseUtils.firebaseAuth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -17,22 +22,24 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
 
-    // firebase variable's
-    private lateinit var database: FirebaseDatabase
-    private lateinit var auth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // initialisation of declared variable
         binding = ActivityMainBinding.inflate(layoutInflater)
-        database = FirebaseUtils.firebaseDatabase
-        auth = FirebaseUtils.firebaseAuth
+
         setContentView(binding.root)
 
-        goToSignup()
+        subscribeUi()
+
+    }
+
+    private fun subscribeUi() {
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         switchFragment()
     }
+
     fun switchFragment() {
         val fragmentList = ArrayList<Fragment>()
         fragmentList.add(chat())
@@ -43,11 +50,20 @@ class MainActivity : AppCompatActivity() {
         binding.tabs.setupWithViewPager(binding.viewPager)
     }
 
-    fun goToSignup() {
-        if(auth.currentUser==null) {
-            startActivity(Intent(this, Number::class.java))
-            finish()
-        }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+        return true
     }
 
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.editProfile -> Toast.makeText(this, "edit profile", Toast.LENGTH_SHORT).show()
+            R.id.setting -> Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
+            R.id.logout -> Toast.makeText(this, "logout", Toast.LENGTH_SHORT).show()
+            R.id.addContact -> Toast.makeText(this, "add contact", Toast.LENGTH_SHORT).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }
+

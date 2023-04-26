@@ -72,6 +72,7 @@
             android:fontFamily="@font/poppins"
             android:inputType="number"
             android:maxLength="6"
+            android:autofillHints="otp"
             android:maxLines="1"
             android:textColor="@color/black" />
 

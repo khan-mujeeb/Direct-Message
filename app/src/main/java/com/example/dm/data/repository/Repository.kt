@@ -1,7 +1,7 @@
-package com.example.dm.presentation.data.repository
+package com.example.dm.data.repository
 
 import androidx.activity.OnBackPressedCallback
-import com.example.dm.presentation.data.model.UserInfo
+import com.example.dm.data.model.UserInfo
 import com.example.dm.utils.FirebaseUtils.userRef
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -15,6 +15,7 @@ class Repository {
         userRef.addValueEventListener(object : ValueEventListener{
 
             override fun onDataChange(snapshot: DataSnapshot) {
+                userList.clear()
                 for (user in snapshot.children)  {
                     val temp = user.getValue(UserInfo::class.java)!!
                     userList.add(temp)

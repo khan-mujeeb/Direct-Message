@@ -4,9 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.dm.MainActivity
+import com.example.dm.presentation.activity.MainActivity
 import com.example.dm.databinding.ActivityNumberBinding
 import com.example.dm.utils.FirebaseUtils
+import com.example.dm.utils.FirebaseUtils.firebaseUser
 
 class Number : AppCompatActivity() {
     private lateinit var binding: ActivityNumberBinding
@@ -17,6 +18,7 @@ class Number : AppCompatActivity() {
         setContentView(binding.root)
 
 //        subscribeUi()
+        goToSignup()
         subscribeCLickEvent()
 
     }
@@ -42,6 +44,13 @@ class Number : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "enter correct number", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    fun goToSignup() {
+        if(firebaseUser != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 

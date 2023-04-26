@@ -1,21 +1,15 @@
 package com.example.dm.utils
 
 import android.content.Context
+import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.example.dm.R
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 object DialogUtils {
     fun buildLoadingDialog(context: Context): AlertDialog {
-        val builder = MaterialAlertDialogBuilder(
-            context,
-            R.style.ThemeOverlay_MaterialComponents_MaterialAlertDialog_Background
-        )
-        builder
-            .setTitle("Please Wait")
-            .setMessage("loading")
+        val builder = AlertDialog.Builder(context)
+        builder.setView(LayoutInflater.from(context).inflate(R.layout.loading_screen, null))
         builder.setCancelable(false)
         return builder.create()
     }
 }
-
