@@ -37,34 +37,19 @@ class Profile : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityProfileBinding
-    private lateinit var viewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         variableInit()
-        checkUserAviablity()
         subscribeClickListner()
     }
 
-    private fun checkUserAviablity() {
-        dialog.show()
-        viewModel.getUserList {userList ->
-            for (user in userList) {
-                if (user.phonenumber == auth.currentUser!!.phoneNumber) {
-                    dialog.dismiss()
-                    Toast.makeText(this, "welcome", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, MainActivity::class.java))
-                }
-            }
-            dialog.dismiss()
-        }
-    }
+
 
     private fun variableInit() {
 
-        viewModel = ViewModelProvider(this)[ViewModel::class.java]
         dialog = DialogUtils.buildLoadingDialog(this@Profile)
         storage = FirebaseUtils.firebaseStorage
         database = FirebaseUtils.firebaseDatabase
@@ -84,7 +69,7 @@ class Profile : AppCompatActivity() {
                 dialog.show()
                 uploadData()
             } else {
-                Toast.makeText(this, "Enter your name", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@Profile, "Enter your name", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -117,15 +102,15 @@ class Profile : AppCompatActivity() {
             .setValue(user)
             .addOnSuccessListener {
                 dialog.dismiss()
-                Toast.makeText(this, "User Created", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, MainActivity::class.java))
+                Toast.makeText(this@Profile, "User Created", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@Profile, MainActivity::class.java))
                 finish()
             }
     }
 
     // photo select
     private fun choosePhotoFromGallery() {
-        Dexter.withActivity(this).withPermissions(
+        Dexter.withActivity(this@Profile).withPermissions(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         ).withListener(
@@ -152,7 +137,7 @@ class Profile : AppCompatActivity() {
 
     // function for storage permission
     fun showDialogForPermissions() {
-        AlertDialog.Builder(this).setMessage(
+        AlertDialog.Builder(this@Profile).setMessage(
             "" +
                     "Allow permission to use this feature"
         ).setPositiveButton("Go to Settings") { _, _ ->
@@ -182,16 +167,16 @@ class Profile : AppCompatActivity() {
                     contentUri = data.data!!
                     try {
                         val selectedImage = MediaStore.Images.Media.getBitmap(
-                            this.contentResolver,
+                            this@Profile.contentResolver,
                             contentUri
                         )
                         check = 1
                         binding.profileImg.setImageBitmap(selectedImage)
 
-                        Toast.makeText(this, "Image Set", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@Profile, "Image Set", Toast.LENGTH_SHORT).show()
                     } catch (e: IOException) {
                         e.printStackTrace()
-                        Toast.makeText(this, "Failed to load Image", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@Profile, "Failed to load Image", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

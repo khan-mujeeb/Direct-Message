@@ -23,16 +23,23 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/dp"
-            android:elevation="20dp"
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="100dp"
             android:layout_width="190dp"
             android:layout_height="190dp"
-            android:layout_marginBottom="20dp" />
+            android:layout_gravity="center">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/dp"
+                android:elevation="20dp"
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                android:layout_marginBottom="20dp" />
+        </androidx.cardview.widget.CardView>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"

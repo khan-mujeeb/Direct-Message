@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.dm.presentation.activity.MainActivity
 import com.example.dm.databinding.ActivityOtpBinding
 import com.example.dm.data.model.UserInfo
+import com.example.dm.data.viewmodel.ViewModel
 import com.example.dm.utils.DialogUtils.buildLoadingDialog
 import com.example.dm.utils.FirebaseUtils
+import com.example.dm.utils.FirebaseUtils.firebaseAuth
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
@@ -24,6 +27,7 @@ class OTP : AppCompatActivity() {
     private lateinit var dialog: AlertDialog
     private lateinit var verificationId: String
     private lateinit var phonenumber: String
+    private lateinit var viewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityOtpBinding.inflate(layoutInflater)
@@ -58,7 +62,7 @@ class OTP : AppCompatActivity() {
         return PhoneAuthOptions.newBuilder(FirebaseUtils.firebaseAuth)
             .setPhoneNumber(phonenumber)
             .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(this)
+            .setActivity(this@OTP)
             .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 override fun onVerificationCompleted(p0: PhoneAuthCredential) {
 
@@ -87,6 +91,7 @@ class OTP : AppCompatActivity() {
         FirebaseUtils.firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                 dialog.dismiss()
+                checkUserAviablity()
                 startActivity(Intent(this, Profile::class.java))
                 finish()
             } else {
@@ -103,10 +108,25 @@ class OTP : AppCompatActivity() {
     private fun variableInit() {
 
         phonenumber = "+91" + intent.getStringExtra("number").toString()
-5
+
+        viewModel = ViewModelProvider(this@OTP)[ViewModel::class.java]
         // loading dialog
         dialog = buildLoadingDialog(this@OTP)
     }
 
+
+    private fun checkUserAviablity() {
+        dialog.show()
+        viewModel.getUserList {userList ->
+            for (user in userList) {
+                if (user.phonenumber == firebaseAuth.currentUser!!.phoneNumber) {
+                    dialog.dismiss()
+                    Toast.makeText(this@OTP, "welcome", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@OTP, MainActivity::class.java))
+                }
+            }
+            dialog.dismiss()
+        }
+    }
 
 }
