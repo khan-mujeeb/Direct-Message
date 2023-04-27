@@ -8,15 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dm.R
-import com.example.dm.presentation.activity.ChatActivity
-import com.example.dm.databinding.ChatItemViewBinding
-import com.example.dm.data.model.Message
 import com.example.dm.data.model.UserInfo
-import com.example.dm.utils.FirebaseUtils
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
+import com.example.dm.databinding.ChatItemViewBinding
+import com.example.dm.presentation.activity.ChatActivity
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class ChatAdapter(var context: Context,var list: List<UserInfo>):RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
     lateinit var database: FirebaseDatabase

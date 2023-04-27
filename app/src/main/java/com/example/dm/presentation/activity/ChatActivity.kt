@@ -38,7 +38,6 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var list: ArrayList<Message>
     private lateinit var img: String
     private lateinit var name: String
-
     lateinit var viewModel: ViewModel
 
 
@@ -51,21 +50,7 @@ class ChatActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
-        // initialisation of declared variable
-        auth = FirebaseUtils.firebaseAuth
-        database = FirebaseUtils.firebaseDatabase
-
-
-        viewModel = ViewModelProvider(this)[ViewModel::class.java]
-
-        senderUid = auth.uid.toString()
-        reciverUid = intent.getStringExtra("uid")!!
-        senderRoom = senderUid + reciverUid
-        reciverRoom = reciverUid + senderUid
-
-        img = intent.getStringExtra("img")!!
-        name = intent.getStringExtra("name")!!
-        list = ArrayList()
+        variableInit()
 
         // setting username and dp
         binding.personName.text = name
@@ -92,11 +77,20 @@ class ChatActivity : AppCompatActivity() {
                         binding.onlineStatus.visibility = View.GONE
                         binding.offilneStatus.visibility = View.VISIBLE
                     }
-                    binding.messageRc.adapter = MessageAdapter(this@ChatActivity, list)
+                    binding.messageRc.adapter = MessageAdapter(
+                        this@ChatActivity,
+                        list,
+                        senderRoom,
+                        reciverRoom,
+                        viewModel
+                    )
                     binding.messageRc.smoothScrollToPosition(
                         MessageAdapter(
                             this@ChatActivity,
-                            list
+                            list,
+                            senderRoom,
+                            reciverRoom,
+                            viewModel
                         ).itemCount
                     );
                 }
@@ -109,13 +103,17 @@ class ChatActivity : AppCompatActivity() {
 
         // updating new text to firebase realtime database
         binding.sendBtn.setOnClickListener {
+
+            val randomkey = database.reference.push().key!!
+
             val textMeassage = binding.message.text
             val message = Message(
                 textMeassage.toString(),
                 senderUid,
-                Date().time
+                Date().time,
+                randomkey
             )
-            val randomkey = database.reference.push().key!!
+
             if (textMeassage.isNotEmpty()) {
                 binding.message.text = null
                 viewModel.sendMessages(
@@ -129,6 +127,21 @@ class ChatActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun variableInit() {
+        auth = FirebaseUtils.firebaseAuth
+        database = FirebaseUtils.firebaseDatabase
+
+        viewModel = ViewModelProvider(this)[ViewModel::class.java]
+        senderUid = auth.uid.toString()
+        reciverUid = intent.getStringExtra("uid")!!
+        senderRoom = senderUid + reciverUid
+        reciverRoom = reciverUid + senderUid
+
+        img = intent.getStringExtra("img")!!
+        name = intent.getStringExtra("name")!!
+        list = ArrayList()
     }
 
     override fun onResume() {

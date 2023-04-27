@@ -1,8 +1,9 @@
 package com.example.dm.data.repository
 
-import androidx.activity.OnBackPressedCallback
 import com.example.dm.data.model.Message
 import com.example.dm.data.model.UserInfo
+import com.example.dm.utils.ConstUtils.message
+import com.example.dm.utils.FirebaseUtils.chatRef
 import com.example.dm.utils.FirebaseUtils.firebaseDatabase
 import com.example.dm.utils.FirebaseUtils.userRef
 import com.google.firebase.database.DataSnapshot
@@ -71,4 +72,23 @@ class Repository {
         userRef.child(userId).updateChildren(updates)
 
     }
+
+
+    /*
+    delete sender message
+     */
+    fun deleteSenderMessage(senderRoom: String, messageId: String) {
+        chatRef.child(senderRoom).child(message).child(messageId).removeValue()
+        println("sender $senderRoom")
+    }
+
+    /*
+    delete reciver message
+    */
+    fun deleteReciverMessage(reciverRoom: String, messageId: String) {
+        chatRef.child(reciverRoom).child(message).child(messageId).removeValue()
+        println("reciver $reciverRoom")
+    }
+
+
 }

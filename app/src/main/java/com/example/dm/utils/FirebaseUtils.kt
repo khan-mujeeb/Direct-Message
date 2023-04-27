@@ -15,6 +15,7 @@ object FirebaseUtils {
 
 
         var userRef = firebaseDatabase.getReference(userNode)
+        val chatRef = firebaseDatabase.getReference("chats")
 
 
 }
