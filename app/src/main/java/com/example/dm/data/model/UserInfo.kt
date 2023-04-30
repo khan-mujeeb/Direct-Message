@@ -6,5 +6,6 @@ data class UserInfo(
     val phonenumber: String = "",
     val imgUri: String = "",
     val activeStatus: String = "",
-    val about: String = ""
+    val about: String = "",
+    val fcm_token: String = ""
 )

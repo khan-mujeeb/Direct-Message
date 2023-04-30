@@ -1,7 +1,13 @@
 package com.example.dm.data.repository
 
+import androidx.core.app.NotificationCompat
+import com.example.dm.R
 import com.example.dm.data.model.Message
 import com.example.dm.data.model.UserInfo
+import com.example.dm.notification.NotificationModel
+import com.example.dm.notification.PushNotification
+import com.example.dm.notification.api.ApiUtlis
+import com.example.dm.utils.ConstUtils.channelId
 import com.example.dm.utils.ConstUtils.message
 import com.example.dm.utils.FirebaseUtils.chatRef
 import com.example.dm.utils.FirebaseUtils.firebaseDatabase
@@ -9,6 +15,8 @@ import com.example.dm.utils.FirebaseUtils.userRef
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import retrofit2.Call
+import retrofit2.Response
 
 class Repository {
 
@@ -39,7 +47,13 @@ class Repository {
     /*
     send message
      */
-    fun sendMessages(senderRoom: String, reciverRoom: String, message: Message, randomkey: String) {
+    fun sendMessages(
+        senderRoom: String,
+        reciverRoom: String,
+        message: Message,
+        randomkey: String,
+        recever_fcm_token: String
+    ) {
         firebaseDatabase.reference
             .child("chats")
             .child(senderRoom)
@@ -47,6 +61,28 @@ class Repository {
             .child(randomkey)
             .setValue(message)
             .addOnSuccessListener {
+
+                val notification = PushNotification(
+                    data = NotificationModel(
+                        title = message.senderName,
+                        body = message.message
+                    ),
+                    to = recever_fcm_token
+                )
+
+                ApiUtlis.getInstance().sendNotification(notification).enqueue(object : retrofit2.Callback<PushNotification>{
+                    override fun onResponse(
+                        call: Call<PushNotification>,
+                        response: Response<PushNotification>
+                    ) {
+
+                    }
+
+                    override fun onFailure(call: Call<PushNotification>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
 
                 firebaseDatabase.reference
                     .child("chats")
@@ -57,7 +93,27 @@ class Repository {
                     .addOnSuccessListener {
 
                     }
+
             }
+    }
+
+    /*
+    get fcm tokken
+     */
+    fun getFcmToken(receverId: String, callback: (String) -> Unit) {
+        userRef.child(receverId).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val user = snapshot.getValue(UserInfo::class.java)
+                    callback(user!!.fcm_token)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
 
@@ -86,8 +142,8 @@ class Repository {
     delete reciver message
     */
     fun deleteReciverMessage(reciverRoom: String, messageId: String) {
+
         chatRef.child(reciverRoom).child(message).child(messageId).removeValue()
-        println("reciver $reciverRoom")
     }
 
 

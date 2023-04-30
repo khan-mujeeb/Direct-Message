@@ -39,6 +39,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var img: String
     private lateinit var name: String
     lateinit var viewModel: ViewModel
+    lateinit var recever_fcm_token: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +47,13 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.back.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-        }
-
+        subscribeOnClickEvents()
         variableInit()
+        subscribeUi()
 
+    }
+
+    private fun subscribeUi() {
         // setting username and dp
         binding.personName.text = name
         Glide.with(this).load(img).into(binding.personImg)
@@ -92,7 +94,7 @@ class ChatActivity : AppCompatActivity() {
                             reciverRoom,
                             viewModel
                         ).itemCount
-                    );
+                    )
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -100,33 +102,42 @@ class ChatActivity : AppCompatActivity() {
                 }
 
             })
+    }
 
+    private fun subscribeOnClickEvents() {
         // updating new text to firebase realtime database
         binding.sendBtn.setOnClickListener {
 
+            val senderName = "auth.currentUser!!.phoneNumber.toString()"
             val randomkey = database.reference.push().key!!
 
             val textMeassage = binding.message.text
             val message = Message(
-                textMeassage.toString(),
-                senderUid,
-                Date().time,
-                randomkey
+                message = textMeassage.toString(),
+                sendUid =  senderUid,
+                timeSTamp = Date().time,
+                messageId = randomkey,
+                senderName = senderName
             )
 
+            println("senderName = $senderName")
             if (textMeassage.isNotEmpty()) {
                 binding.message.text = null
                 viewModel.sendMessages(
                     senderRoom = senderRoom,
                     reciverRoom = reciverRoom,
                     randomkey = randomkey,
-                    message = message
-                )
+                    message = message,
+                    recever_fcm_token = recever_fcm_token
+                    )
             } else {
                 Toast.makeText(this, "Enter your text", Toast.LENGTH_SHORT).show()
             }
         }
 
+        binding.back.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
     }
 
     private fun variableInit() {
@@ -142,6 +153,10 @@ class ChatActivity : AppCompatActivity() {
         img = intent.getStringExtra("img")!!
         name = intent.getStringExtra("name")!!
         list = ArrayList()
+
+         viewModel.getFcmToken(reciverUid) { token->
+            recever_fcm_token = token
+        }
     }
 
     override fun onResume() {

@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         fragmentList.add(chat())
         fragmentList.add(status())
 
-        val adapter = ViewPagerAdapter(this, supportFragmentManager, fragmentList)
+        val adapter = ViewPagerAdapter(this@MainActivity, supportFragmentManager, fragmentList)
         binding.viewPager.adapter = adapter
         binding.tabs.setupWithViewPager(binding.viewPager)
     }

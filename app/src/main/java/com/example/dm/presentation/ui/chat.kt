@@ -50,15 +50,15 @@ class chat : Fragment() {
                     users.add(user)
                 }
             }
-            binding.rc.adapter = ChatAdapter(requireContext(), users)
+            binding.rc.adapter = ChatAdapter(requireActivity(), users)
         }
     }
 
     private fun varibaleInit() {
-        viewModel = ViewModelProvider(this)[ViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[ViewModel::class.java]
         binding = FragmentChatBinding.inflate(layoutInflater)
         userList = ArrayList()
-        auth = FirebaseUtils.firebaseAuth
+        auth = firebaseAuth
         database = FirebaseUtils.firebaseDatabase
     }
 

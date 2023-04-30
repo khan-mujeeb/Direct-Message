@@ -2,6 +2,7 @@ package com.example.dm.presentation.account
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +11,13 @@ import com.example.dm.presentation.activity.MainActivity
 import com.example.dm.databinding.ActivityOtpBinding
 import com.example.dm.data.model.UserInfo
 import com.example.dm.data.viewmodel.ViewModel
+import com.example.dm.presentation.temp
 import com.example.dm.utils.DialogUtils.buildLoadingDialog
 import com.example.dm.utils.FirebaseUtils
 import com.example.dm.utils.FirebaseUtils.firebaseAuth
+import com.example.dm.utils.FirebaseUtils.firebaseUser
+import com.example.dm.utils.FirebaseUtils.userRef
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
@@ -20,6 +25,7 @@ import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.concurrent.TimeUnit
 
 class OTP : AppCompatActivity() {
@@ -59,7 +65,7 @@ class OTP : AppCompatActivity() {
 
     private fun getOTP(): PhoneAuthOptions {
         dialog.show()
-        return PhoneAuthOptions.newBuilder(FirebaseUtils.firebaseAuth)
+        return PhoneAuthOptions.newBuilder(firebaseAuth)
             .setPhoneNumber(phonenumber)
             .setTimeout(60L, TimeUnit.SECONDS)
             .setActivity(this@OTP)
@@ -88,12 +94,33 @@ class OTP : AppCompatActivity() {
 
         // otp verification
         val credential = PhoneAuthProvider.getCredential(verificationId, otp)
-        FirebaseUtils.firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
             if (it.isSuccessful) {
                 dialog.dismiss()
-                checkUserAviablity()
-                startActivity(Intent(this, Profile::class.java))
-                finish()
+                checkUserAvailability { task ->
+
+                    FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { fcm ->
+                        if (!fcm.isSuccessful) {
+                            return@OnCompleteListener
+                        }
+
+                        // Get new FCM registration token
+                        val token = fcm.result
+                        userRef.child(firebaseUser!!.uid).child("fcm_token").setValue(token)
+
+                    })
+
+                    println(" abcd $task")
+                    if (task) {
+                        Toast.makeText(this@OTP, "welcome", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@OTP, temp::class.java))
+                        finish()
+                    } else {
+                        startActivity(Intent(this@OTP, Profile::class.java))
+                        finish()
+                    }
+                }
+
             } else {
                 dialog.dismiss()
                 Toast.makeText(this@OTP, "${it.exception}", Toast.LENGTH_LONG).show()
@@ -114,19 +141,21 @@ class OTP : AppCompatActivity() {
         dialog = buildLoadingDialog(this@OTP)
     }
 
-
-    private fun checkUserAviablity() {
+    private fun checkUserAvailability(callback: (Boolean) -> Unit) {
         dialog.show()
-        viewModel.getUserList {userList ->
+        viewModel.getUserList { userList ->
+            var matchFound = false
             for (user in userList) {
-                if (user.phonenumber == firebaseAuth.currentUser!!.phoneNumber) {
-                    dialog.dismiss()
-                    Toast.makeText(this@OTP, "welcome", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@OTP, MainActivity::class.java))
+                println("mujeeb ${user.phonenumber}  ${firebaseAuth.currentUser!!.phoneNumber}")
+                if (user.phonenumber == firebaseAuth.currentUser?.phoneNumber) {
+                    matchFound = true
+                    break
                 }
             }
             dialog.dismiss()
+            callback(matchFound)
         }
     }
+
 
 }

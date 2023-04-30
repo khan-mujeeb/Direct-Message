@@ -25,7 +25,7 @@ class Number : AppCompatActivity() {
 
     private fun subscribeUi() {
         // if user is login
-        if (FirebaseUtils.firebaseUser != null) {
+        if (firebaseUser != null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }

@@ -16,8 +16,8 @@ class ViewModel(private val repository: Repository = Repository()): androidx.lif
         }
     }
 
-    fun sendMessages(senderRoom: String, reciverRoom: String, message: Message, randomkey: String) {
-        repository.sendMessages(senderRoom, reciverRoom, message, randomkey)
+    fun sendMessages(senderRoom: String, reciverRoom: String, message: Message, randomkey: String, recever_fcm_token: String) {
+        repository.sendMessages(senderRoom, reciverRoom, message, randomkey,recever_fcm_token)
     }
 
 
@@ -37,5 +37,14 @@ class ViewModel(private val repository: Repository = Repository()): androidx.lif
     */
     fun deleteReciverMessage(reciverRoom: String, messageId: String) {
         repository.deleteReciverMessage(reciverRoom, messageId)
+    }
+
+    /*
+    get fcm token
+     */
+    fun getFcmToken(receverId: String, callback: (String) -> Unit) {
+        repository.getFcmToken(receverId) { task ->
+            callback(task)
+        }
     }
 }

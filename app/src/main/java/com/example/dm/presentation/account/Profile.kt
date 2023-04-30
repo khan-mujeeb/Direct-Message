@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,8 +19,10 @@ import com.example.dm.data.model.UserInfo
 import com.example.dm.data.viewmodel.ViewModel
 import com.example.dm.utils.DialogUtils
 import com.example.dm.utils.FirebaseUtils
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -45,7 +48,6 @@ class Profile : AppCompatActivity() {
         variableInit()
         subscribeClickListner()
     }
-
 
 
     private fun variableInit() {
@@ -90,22 +92,38 @@ class Profile : AppCompatActivity() {
     private fun uploadDataInfo(imgUri: String) {
 
 
-        val user = UserInfo(
-            auth.uid.toString(),
-            binding.nameEdtxt.text.toString(),
-            auth.currentUser?.phoneNumber.toString(),
-            imgUri, "online"
-        )
-
-        database.reference.child("users")
-            .child(auth.uid.toString())
-            .setValue(user)
-            .addOnSuccessListener {
-                dialog.dismiss()
-                Toast.makeText(this@Profile, "User Created", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this@Profile, MainActivity::class.java))
-                finish()
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                return@OnCompleteListener
             }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            println("fcm token $token")
+            val user = UserInfo(
+                uid = auth.uid.toString(),
+                name = binding.nameEdtxt.text.toString(),
+                phonenumber = auth.currentUser?.phoneNumber.toString(),
+                imgUri = imgUri,
+                activeStatus = "online",
+                about = "",
+                fcm_token = token
+            )
+
+            database.reference.child("users")
+                .child(auth.uid.toString())
+                .setValue(user)
+                .addOnSuccessListener {
+                    dialog.dismiss()
+                    Toast.makeText(this@Profile, "User Created", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@Profile, MainActivity::class.java))
+                    finish()
+                }
+
+
+        })
+
     }
 
     // photo select
@@ -176,7 +194,8 @@ class Profile : AppCompatActivity() {
                         Toast.makeText(this@Profile, "Image Set", Toast.LENGTH_SHORT).show()
                     } catch (e: IOException) {
                         e.printStackTrace()
-                        Toast.makeText(this@Profile, "Failed to load Image", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@Profile, "Failed to load Image", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }

@@ -21,25 +21,29 @@ class MessageAdapter(
     val senderRoom: String,
     val reciverRoom: String,
     val viewModel: ViewModel
-): RecyclerView.Adapter<ViewHolder>() {
+) : RecyclerView.Adapter<ViewHolder>() {
 
 
     val ITEM_SENT = 1
     val ITEM_RECEIVE = 2
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return if (viewType == ITEM_SENT)
-            SentViewHolder(LayoutInflater.from(context).inflate(R.layout.sent_item_view,parent,false))
+            SentViewHolder(
+                LayoutInflater.from(context).inflate(R.layout.sent_item_view, parent, false)
+            )
         else
-            ReceiverViewHolder(LayoutInflater.from(context).inflate(R.layout.recever_item_view,parent,false))
+            ReceiverViewHolder(
+                LayoutInflater.from(context).inflate(R.layout.recever_item_view, parent, false)
+            )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var message = list[position]
         val type = holder.itemViewType
-        if(type == ITEM_SENT) {
+        if (type == ITEM_SENT) {
             val viewHolder = holder as SentViewHolder
             viewHolder.binding.textSend.text = message.message
-        }else {
+        } else {
             val viewHolder = holder as ReceiverViewHolder
             viewHolder.binding.textReceive.text = message.message
         }
@@ -52,10 +56,7 @@ class MessageAdapter(
 
                 builder.setNegativeButton("Delete for everyone") { _, _ ->
 
-                    viewModel.deleteSenderMessage(
-                        senderRoom = senderRoom,
-                        messageId = message.messageId
-                    )
+                    deleteSenderMessage(message)
 
                     viewModel.deleteReciverMessage(
                         reciverRoom = reciverRoom,
@@ -66,10 +67,7 @@ class MessageAdapter(
                 }
 
                 builder.setPositiveButton("Delete for me") { _, _ ->
-                    viewModel.deleteSenderMessage(
-                        senderRoom = senderRoom,
-                        messageId = message.messageId
-                    )
+                    deleteSenderMessage(message)
                     notifyItemRemoved(position)
                 }
 
@@ -83,10 +81,7 @@ class MessageAdapter(
                 val builder = AlertDialog.Builder(holder.itemView.context)
                 builder.setMessage("Do you want to delete this message?")
                 builder.setPositiveButton("Delete for me") { _, _ ->
-                    viewModel.deleteSenderMessage(
-                        senderRoom = senderRoom,
-                        messageId = message.messageId
-                    )
+                    deleteSenderMessage(message)
                 }
                 builder.setNegativeButton(cancel) { _, _ ->
                 }
@@ -97,19 +92,27 @@ class MessageAdapter(
 
     }
 
+    private fun deleteSenderMessage(message: Message) {
+        viewModel.deleteSenderMessage(
+            senderRoom = senderRoom,
+            messageId = message.messageId
+        )
+
+    }
+
 
     override fun getItemViewType(position: Int): Int {
-        return if(FirebaseUtils.firebaseAuth.uid == list[position].sendUid)
+        return if (FirebaseUtils.firebaseAuth.uid == list[position].sendUid)
             ITEM_SENT
         else
             ITEM_RECEIVE
     }
 
-    inner class SentViewHolder(view: View): ViewHolder(view) {
+    inner class SentViewHolder(view: View) : ViewHolder(view) {
         var binding = SentItemViewBinding.bind(view)
     }
 
-    inner class ReceiverViewHolder(view: View): ViewHolder(view) {
+    inner class ReceiverViewHolder(view: View) : ViewHolder(view) {
         var binding = ReceverItemViewBinding.bind(view)
     }
 
