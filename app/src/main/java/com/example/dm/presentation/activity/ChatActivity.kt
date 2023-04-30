@@ -13,6 +13,8 @@ import com.example.dm.data.model.Message
 import com.example.dm.data.viewmodel.ViewModel
 import com.example.dm.databinding.ActivityChatBinding
 import com.example.dm.utils.FirebaseUtils
+import com.example.dm.utils.FirebaseUtils.chatRef
+import com.example.dm.utils.FirebaseUtils.userRef
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -60,8 +62,7 @@ class ChatActivity : AppCompatActivity() {
 
 
         // fetching most recent message from firebase realtime database
-        database.reference.child("chats")
-            .child(senderRoom)
+        chatRef.child(senderRoom)
             .child("message")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -86,15 +87,7 @@ class ChatActivity : AppCompatActivity() {
                         reciverRoom,
                         viewModel
                     )
-                    binding.messageRc.smoothScrollToPosition(
-                        MessageAdapter(
-                            this@ChatActivity,
-                            list,
-                            senderRoom,
-                            reciverRoom,
-                            viewModel
-                        ).itemCount
-                    )
+                    binding.messageRc.scrollToPosition(list.size - 1)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -112,6 +105,8 @@ class ChatActivity : AppCompatActivity() {
             val randomkey = database.reference.push().key!!
 
             val textMeassage = binding.message.text
+
+            // creating message
             val message = Message(
                 message = textMeassage.toString(),
                 sendUid =  senderUid,
@@ -120,7 +115,8 @@ class ChatActivity : AppCompatActivity() {
                 senderName = senderName
             )
 
-            println("senderName = $senderName")
+
+//            sending message
             if (textMeassage.isNotEmpty()) {
                 binding.message.text = null
                 viewModel.sendMessages(
@@ -171,9 +167,7 @@ class ChatActivity : AppCompatActivity() {
 
     // updating active status of user
     fun activeStatus(status: String) {
-        database.reference
-            .child("users")
-            .child(auth.uid.toString())
+        userRef.child(auth.uid.toString())
             .child("activeStatus")
             .setValue(status)
     }

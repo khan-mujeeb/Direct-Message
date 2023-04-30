@@ -5,6 +5,7 @@ object ConstUtils {
     const val userNode = "users"
     const val message = "message"
     const val cancel = "Cancel"
+    const val chats = "chats"
 
     const val channelId = "DM_ID"
 

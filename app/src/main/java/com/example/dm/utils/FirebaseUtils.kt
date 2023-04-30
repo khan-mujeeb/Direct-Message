@@ -1,5 +1,6 @@
 package com.example.dm.utils
 
+import com.example.dm.utils.ConstUtils.chats
 import com.example.dm.utils.ConstUtils.userNode
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -15,7 +16,7 @@ object FirebaseUtils {
 
 
         var userRef = firebaseDatabase.getReference(userNode)
-        val chatRef = firebaseDatabase.getReference("chats")
+        val chatRef = firebaseDatabase.getReference(chats)
 
 
 }
