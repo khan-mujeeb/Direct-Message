@@ -20,6 +20,9 @@
         android:theme="@style/Theme.Dm"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.SearchUserActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.temp"
             android:exported="false" />
         <activity
@@ -67,17 +70,15 @@
                 android:value="" />
         </activity>
 
-        <service android:name=".notification.MyFirebaseMessagingServices"
+        <service
+            android:name=".notification.MyFirebaseMessagingServices"
             android:exported="true"
             android:permission="com.google.android.c2dm.permission.Send">
             <intent-filter>
-
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
-                <action android:name="com.google.android.c2dm.permission.Send"/>
-
+                <action android:name="com.google.android.c2dm.permission.Send" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

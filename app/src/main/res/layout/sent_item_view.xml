@@ -14,7 +14,7 @@
         android:maxWidth="300dp"
         android:layout_height="wrap_content"
         android:background="@drawable/sent_bg"
-        android:padding="8dp"
+        android:padding="10dp"
         android:text="Hello how are you? "
         android:textColor="@color/white"
         android:textSize="16sp"

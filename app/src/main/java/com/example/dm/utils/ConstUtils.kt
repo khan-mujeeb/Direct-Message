@@ -6,6 +6,7 @@ object ConstUtils {
     const val message = "message"
     const val cancel = "Cancel"
     const val chats = "chats"
+    const val contact = "contact"
 
     const val channelId = "DM_ID"
 

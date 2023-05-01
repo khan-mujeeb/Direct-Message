@@ -9,7 +9,9 @@ import com.example.dm.notification.PushNotification
 import com.example.dm.notification.api.ApiUtlis
 import com.example.dm.utils.ConstUtils.channelId
 import com.example.dm.utils.ConstUtils.message
+import com.example.dm.utils.FirebaseUtils
 import com.example.dm.utils.FirebaseUtils.chatRef
+import com.example.dm.utils.FirebaseUtils.firebaseAuth
 import com.example.dm.utils.FirebaseUtils.firebaseDatabase
 import com.example.dm.utils.FirebaseUtils.userRef
 import com.google.firebase.database.DataSnapshot
@@ -144,6 +146,16 @@ class Repository {
     fun deleteReciverMessage(reciverRoom: String, messageId: String) {
 
         chatRef.child(reciverRoom).child(message).child(messageId).removeValue()
+    }
+
+    /*
+    add contact
+     */
+    fun addContact(user: UserInfo) {
+        val randomkey = firebaseDatabase.reference.push().key!!
+        FirebaseUtils.contactRef.child(firebaseAuth.currentUser?.phoneNumber.toString())
+            .child(randomkey)
+            .setValue(user)
     }
 
 

@@ -2,124 +2,131 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/bg"
     android:layout_height="match_parent"
+    android:background="#ebebe9"
+    android:orientation="vertical"
     tools:context=".presentation.activity.ChatActivity">
 
-    <LinearLayout
-        android:paddingLeft="8dp"
-        android:background="@color/darl_blue"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#ebebe9"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
         <ImageView
             android:id="@+id/back"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/round_arrow_back_24" />
 
-        <RelativeLayout
-            android:layout_width="40dp"
-            android:layout_height="40dp">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/person_img"
-                android:layout_marginStart="2dp"
-                android:src="@drawable/ic_baseline_person_24"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:visibility="gone"
-                android:id="@+id/offilne_status"
-                android:elevation="10dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:src="@drawable/offline_circle"
-                android:layout_height="wrap_content"/>
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:visibility="gone"
-                android:id="@+id/online_status"
-                android:elevation="10dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:src="@drawable/online_circle"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/person_name"
-            android:layout_marginStart="4dp"
-            android:gravity="center_vertical"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@color/white"
-            android:text="Name of person"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@id/person_img"
+            android:layout_toEndOf="@id/back"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_weight="8"
-        android:orientation="vertical"
-        android:id="@+id/ll"
-        android:layout_marginBottom="3dp"
+            <TextView
+                android:id="@+id/person_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="@string/name_of_person"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_marginTop="-5dp"
+                android:id="@+id/activeStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins"
+                android:gravity="center"
+                android:text="@string/online"
+                android:textColor="#6C6569"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/person_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="15dp"
+            android:elevation="20dp"
+            android:src="@drawable/ic_baseline_person_24" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/message_rc"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/message_rc"
-            android:layout_width="match_parent"
-            tools:listitem="@layout/recever_item_view"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/recever_item_view" />
+
     <LinearLayout
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginTop="4dp"
         android:id="@+id/l"
-        android:padding="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:padding="2dp"
+        android:elevation="30dp"
+        android:background="#FDFDFD">
 
-            <EditText
-                android:id="@+id/message"
-                android:inputType="textMultiLine"
-                android:background="@drawable/edittext_bg"
-                android:padding="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/black"
-                android:layout_width="0dp"
-                android:layout_weight="8"
-                android:hint="Message"
-                android:layout_height="wrap_content"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_marginStart="15dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/outline_emoji_emotions_24"/>
+
+        <EditText
+            android:layout_marginStart="10dp"
+            android:background="@null"
+            android:id="@+id/message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:textColorHint="#aeadaf"
+            android:hint="@string/type_message"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
         <LinearLayout
-            android:background="@drawable/sned_btn_bg"
-            android:gravity="center"
+            android:layout_marginEnd="15dp"
             android:id="@+id/sendBtn"
             android:layout_width="50dp"
-            android:layout_marginStart="8dp"
-            app:cardCornerRadius="100dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/sned_btn_bg"
+            android:gravity="center"
+            app:cardCornerRadius="100dp">
 
-            android:layout_height="50dp">
             <ImageView
-
-                android:elevation="8dp"
-                android:layout_gravity="center"
-                android:src="@drawable/send"
                 android:layout_width="22dp"
-                android:layout_height="22dp"/>
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:elevation="8dp"
+                android:src="@drawable/send" />
         </LinearLayout>
     </LinearLayout>
 

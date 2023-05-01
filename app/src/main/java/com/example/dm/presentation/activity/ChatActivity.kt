@@ -72,14 +72,14 @@ class ChatActivity : AppCompatActivity() {
                         list.add(data!!)
                     }
 
-                    var activeStatus = intent.getStringExtra("active")
+                    /*var activeStatus = intent.getStringExtra("active")
                     if (activeStatus == "online") {
                         binding.onlineStatus.visibility = View.VISIBLE
                         binding.offilneStatus.visibility = View.GONE
                     } else {
                         binding.onlineStatus.visibility = View.GONE
                         binding.offilneStatus.visibility = View.VISIBLE
-                    }
+                    }*/
                     binding.messageRc.adapter = MessageAdapter(
                         this@ChatActivity,
                         list,

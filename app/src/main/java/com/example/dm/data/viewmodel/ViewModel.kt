@@ -47,4 +47,12 @@ class ViewModel(private val repository: Repository = Repository()): androidx.lif
             callback(task)
         }
     }
+
+    /*
+    add contact
+     */
+    fun addContact(user: UserInfo){
+        repository.addContact(user)
+    }
+
 }
