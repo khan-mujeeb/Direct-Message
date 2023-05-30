@@ -35,3 +35,12 @@
 
 </div>
 
+
+## Built with 
+
+
+- [Kotlin](kotlinlang.org): Programming language
+- [Firebase](https://firebase.google.com/?hl=en&authuser=0)
+- [MVVM](https://developer.android.com/topic/architecture)
+
+
