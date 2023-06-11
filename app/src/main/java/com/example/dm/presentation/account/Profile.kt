@@ -8,15 +8,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.dm.presentation.activity.MainActivity
-import com.example.dm.databinding.ActivityProfileBinding
-import com.example.dm.data.model.UserInfo
 import com.example.dm.data.viewmodel.ViewModel
+import com.example.dm.databinding.ActivityProfileBinding
+import com.example.dm.presentation.activity.MainActivity
 import com.example.dm.utils.DialogUtils
 import com.example.dm.utils.FirebaseUtils
 import com.google.android.gms.tasks.OnCompleteListener
@@ -40,6 +38,7 @@ class Profile : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var viewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +50,7 @@ class Profile : AppCompatActivity() {
 
 
     private fun variableInit() {
-
+        viewModel = ViewModelProvider(this)[ViewModel::class.java]
         dialog = DialogUtils.buildLoadingDialog(this@Profile)
         storage = FirebaseUtils.firebaseStorage
         database = FirebaseUtils.firebaseDatabase
@@ -66,27 +65,18 @@ class Profile : AppCompatActivity() {
 
         // finish button
         binding.finishBtn.setOnClickListener {
-            val name = binding.nameEdtxt.text.toString()
+            val name = binding.nameEdtxt.editText?.text.toString()
             if (name.isNotEmpty() && check == 1) {
                 dialog.show()
-                uploadData()
+                viewModel.uploadFileToStorage(contentUri) { url ->
+                    uploadDataInfo(url!!)
+                }
             } else {
                 Toast.makeText(this@Profile, "Enter your name", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    // function to upload data of newly created user
-    private fun uploadData() {
-        val reference = storage.reference.child("Profile").child(Date().time.toString())
-        reference.putFile(contentUri).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                reference.downloadUrl.addOnSuccessListener { uri ->
-                    uploadDataInfo(uri.toString())
-                }
-            }
-        }
-    }
 
     //    function to create user
     private fun uploadDataInfo(imgUri: String) {
@@ -99,29 +89,30 @@ class Profile : AppCompatActivity() {
 
             // Get new FCM registration token
             val token = task.result
+            val uid = auth.uid.toString()
+            val name = binding.nameEdtxt.editText?.text.toString()
+            val phoneNumber = auth.currentUser?.phoneNumber.toString()
 
-            println("fcm token $token")
-            val user = UserInfo(
-                uid = auth.uid.toString(),
-                name = binding.nameEdtxt.text.toString(),
-                phonenumber = auth.currentUser?.phoneNumber.toString(),
+            viewModel.createUser(
+                uid = uid,
+                name = name,
+                phoneNumber = phoneNumber,
                 imgUri = imgUri,
-                activeStatus = "online",
-                about = "",
-                fcm_token = token
+                fcmToken = token
             )
 
-            database.reference.child("users")
-                .child(auth.uid.toString())
-                .setValue(user)
-                .addOnSuccessListener {
-                    dialog.dismiss()
-                    Toast.makeText(this@Profile, "User Created", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@Profile, MainActivity::class.java))
+
+            viewModel.createUserSuccess.observe(this) { success ->
+                if (success) {
+                    // User creation was successful, navigate to the next screen
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                     finish()
+                } else {
+                    // User creation failed, show an error message
+                    Toast.makeText(this, "Failed to create user", Toast.LENGTH_SHORT).show()
                 }
-
-
+            }
         })
 
     }
@@ -149,15 +140,14 @@ class Profile : AppCompatActivity() {
                 ) {
                     showDialogForPermissions()
                 }
-            }).onSameThread().check();
+            }).onSameThread().check()
 
     }
 
     // function for storage permission
     fun showDialogForPermissions() {
         AlertDialog.Builder(this@Profile).setMessage(
-            "" +
-                    "Allow permission to use this feature"
+            "Allow permission to use this feature"
         ).setPositiveButton("Go to Settings") { _, _ ->
             try {
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)

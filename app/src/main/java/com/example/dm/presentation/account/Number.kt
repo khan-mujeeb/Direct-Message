@@ -36,15 +36,19 @@ class Number : AppCompatActivity() {
         // go to otp activity
         binding.getOtp.setOnClickListener {
             number = binding.numberEt.editText!!.text.toString()
-            if (checkEditText()) {
-                val intent = Intent(this, OTP::class.java)
-                intent.putExtra("number", number)
-                startActivity(intent)
-                finish()
+            if (checkEditText(number)) {
+                goToOTPActivity()
             } else {
                 Toast.makeText(this, "enter correct number", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun goToOTPActivity() {
+        val intent = Intent(this, OTP::class.java)
+        intent.putExtra("number", number)
+        startActivity(intent)
+        finish()
     }
 
     fun goToSignup() {
@@ -55,7 +59,7 @@ class Number : AppCompatActivity() {
     }
 
     // function to check edittext is empty or not
-    fun checkEditText(): Boolean {
+    fun checkEditText(number: String): Boolean {
 
         if (number.isNotEmpty() && number.length == 10) {
             return true

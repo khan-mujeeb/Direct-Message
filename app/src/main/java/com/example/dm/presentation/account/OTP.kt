@@ -2,18 +2,14 @@ package com.example.dm.presentation.account
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.dm.presentation.activity.MainActivity
-import com.example.dm.databinding.ActivityOtpBinding
-import com.example.dm.data.model.UserInfo
 import com.example.dm.data.viewmodel.ViewModel
+import com.example.dm.databinding.ActivityOtpBinding
 import com.example.dm.presentation.temp
 import com.example.dm.utils.DialogUtils.buildLoadingDialog
-import com.example.dm.utils.FirebaseUtils
 import com.example.dm.utils.FirebaseUtils.firebaseAuth
 import com.example.dm.utils.FirebaseUtils.firebaseUser
 import com.example.dm.utils.FirebaseUtils.userRef
@@ -22,9 +18,6 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.messaging.FirebaseMessaging
 import java.util.concurrent.TimeUnit
 

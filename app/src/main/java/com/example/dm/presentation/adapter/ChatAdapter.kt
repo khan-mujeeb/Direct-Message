@@ -36,13 +36,13 @@ class ChatAdapter(var context: Context,var list: List<UserInfo>):RecyclerView.Ad
 
 //        55
 
-        if(user.activeStatus=="online") {
+       /* if(user.activeStatus=="online") {
             holder.binding.onlineStatus.visibility = View.VISIBLE
             holder.binding.offilneStatus.visibility = View.GONE
         }else {
             holder.binding.onlineStatus.visibility = View.GONE
             holder.binding.offilneStatus.visibility = View.VISIBLE
-        }
+        }*/
 
 
         holder.itemView.setOnClickListener {

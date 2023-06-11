@@ -1,16 +1,12 @@
 package com.example.dm.presentation.activity
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dm.R
@@ -22,9 +18,6 @@ import com.example.dm.presentation.adapter.ViewPagerAdapter
 import com.example.dm.presentation.ui.chat
 import com.example.dm.presentation.ui.status
 import com.example.dm.utils.DialogUtils
-import com.example.dm.utils.FirebaseUtils.contactRef
-import com.example.dm.utils.FirebaseUtils.firebaseAuth
-import com.example.dm.utils.FirebaseUtils.firebaseDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,13 +34,16 @@ class MainActivity : AppCompatActivity() {
         // initialisation of declared variable
         binding = ActivityMainBinding.inflate(layoutInflater)
         dialogBinding = SearchAlertDialogBinding.inflate(layoutInflater)
-
-
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this)[ViewModel::class.java]
-        loadingDialog = DialogUtils.buildLoadingDialog(this@MainActivity)
+
+        variableInit()
         subscribeUi()
 
+    }
+
+    private fun variableInit() {
+        viewModel = ViewModelProvider(this)[ViewModel::class.java]
+        loadingDialog = DialogUtils.buildLoadingDialog(this@MainActivity)
     }
 
     private fun subscribeUi() {
