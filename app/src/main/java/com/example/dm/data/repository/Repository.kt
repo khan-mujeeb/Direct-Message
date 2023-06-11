@@ -1,26 +1,52 @@
 package com.example.dm.data.repository
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.startActivity
 import com.example.dm.R
 import com.example.dm.data.model.Message
 import com.example.dm.data.model.UserInfo
 import com.example.dm.notification.NotificationModel
 import com.example.dm.notification.PushNotification
 import com.example.dm.notification.api.ApiUtlis
+import com.example.dm.presentation.activity.MainActivity
 import com.example.dm.utils.ConstUtils.channelId
 import com.example.dm.utils.ConstUtils.message
 import com.example.dm.utils.FirebaseUtils
 import com.example.dm.utils.FirebaseUtils.chatRef
 import com.example.dm.utils.FirebaseUtils.firebaseAuth
 import com.example.dm.utils.FirebaseUtils.firebaseDatabase
+import com.example.dm.utils.FirebaseUtils.storageRef
 import com.example.dm.utils.FirebaseUtils.userRef
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import retrofit2.Call
 import retrofit2.Response
+import java.util.*
 
 class Repository {
+
+    /*
+    create user 
+     */
+    fun createUser(name: String, phoneNumber: String, imgUri: String, fcmToken: String, uid: String) {
+
+        val user = UserInfo(
+            uid = uid,
+            name = name,
+            phonenumber = phoneNumber,
+            imgUri = imgUri,
+            activeStatus = "online",
+            about = "",
+            fcm_token = fcmToken
+        )
+
+        userRef.child(uid).setValue(user)
+    }
 
     // fun to check user is created or not
     fun getUserList(callback: (List<UserInfo>) -> Unit) {
@@ -156,6 +182,22 @@ class Repository {
         FirebaseUtils.contactRef.child(firebaseAuth.currentUser?.phoneNumber.toString())
             .child(randomkey)
             .setValue(user)
+    }
+
+    /*
+    upload data
+     */
+    fun uploadFileToStorage(uri: Uri, callback: (String?) -> Unit) {
+        val reference = storageRef.child(Date().time.toString())
+        reference.putFile(uri).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                reference.downloadUrl.addOnSuccessListener { uri ->
+                    callback(uri.toString())
+                }
+            } else {
+                callback(null)
+            }
+        }
     }
 
 

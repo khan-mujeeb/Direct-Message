@@ -1,11 +1,16 @@
 package com.example.dm.data.viewmodel
 
+import android.net.Uri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.dm.data.model.Message
 import com.example.dm.data.model.UserInfo
 import com.example.dm.data.repository.Repository
-import com.example.dm.utils.FirebaseUtils
 
 class ViewModel(private val repository: Repository = Repository()): androidx.lifecycle.ViewModel() {
+
+    private val _createUserSuccess = MutableLiveData<Boolean>()
+    val createUserSuccess: LiveData<Boolean> = _createUserSuccess
 
     /*
     function to get User List
@@ -55,4 +60,20 @@ class ViewModel(private val repository: Repository = Repository()): androidx.lif
         repository.addContact(user)
     }
 
+    /*
+     create user
+      */
+    fun createUser(name: String, phoneNumber: String, imgUri: String, fcmToken: String, uid: String) {
+        repository.createUser(name, phoneNumber, imgUri, fcmToken, uid)
+        _createUserSuccess.value = true
+    }
+
+    /*
+    upload data
+     */
+    fun uploadFileToStorage(uri: Uri, callback: (String?) -> Unit) {
+         repository.uploadFileToStorage(uri) { url ->
+             callback(url)
+         }
+    }
 }
