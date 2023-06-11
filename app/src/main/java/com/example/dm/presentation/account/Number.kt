@@ -1,12 +1,11 @@
 package com.example.dm.presentation.account
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.example.dm.presentation.activity.MainActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.dm.databinding.ActivityNumberBinding
-import com.example.dm.utils.FirebaseUtils
+import com.example.dm.presentation.activity.MainActivity
 import com.example.dm.utils.FirebaseUtils.firebaseUser
 
 class Number : AppCompatActivity() {
