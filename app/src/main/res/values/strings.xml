@@ -18,4 +18,5 @@
     <string name="name_of_person">Name of person</string>
     <string name="online">Online</string>
     <string name="type_message">Type Message</string>
+    <string name="otp_verification">OTP Verification</string>
 </resources>
