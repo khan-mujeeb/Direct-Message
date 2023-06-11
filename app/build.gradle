@@ -43,6 +43,7 @@ dependencies {
 
     //room
     implementation "androidx.room:room-runtime:2.4.0"
+    implementation 'junit:junit:4.12'
     kapt "androidx.room:room-compiler:2.4.0"
 
     // retrofit

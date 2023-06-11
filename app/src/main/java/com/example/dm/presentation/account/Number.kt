@@ -9,6 +9,8 @@ import com.example.dm.databinding.ActivityNumberBinding
 import com.example.dm.utils.FirebaseUtils
 import com.example.dm.utils.FirebaseUtils.firebaseUser
 
+
+
 class Number : AppCompatActivity() {
     private lateinit var binding: ActivityNumberBinding
     private lateinit var number: String
