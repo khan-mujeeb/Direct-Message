@@ -26,3 +26,6 @@ jobs:
 
       - name: Build Project
         run: ./gradlew assemble
+        
+      - name: Build and package APK
+        run: ./gradlew assembleDebug
