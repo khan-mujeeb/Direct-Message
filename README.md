@@ -4,6 +4,7 @@
 - With Phone Number Authentication
 - Ask for permission used
 - real time chat
+- real time notification
 
 - user active status
 
